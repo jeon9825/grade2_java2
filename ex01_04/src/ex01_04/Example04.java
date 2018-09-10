@@ -3,7 +3,7 @@ package ex01_04;
 public class Example04 {
 	static String removeO(String s) {
 		for (int i = 0; i < s.length();) {
-			if (s.toLowerCase().charAt(i) == 'o')
+			if (s.toUpperCase().charAt(i) == 'O')
 				s=(s.substring(0,i)+s.substring(i+1));
 			else
 				i++;
