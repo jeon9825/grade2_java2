@@ -1,12 +1,12 @@
 # grade2_java2
 ## 목차
-[6 Java 배열 정렬기능]()
+[6 Java 배열 정렬기능](https://github.com/jeon9825/grade2_java2#06-java-%EB%B0%B0%EC%97%B4-%EC%A0%95%EB%A0%AC-%EA%B8%B0%EB%8A%A5)    
 [7 Arrays 클래스](https://github.com/jeon9825/grade2_java2#07-arrays-%ED%81%B4%EB%9E%98%EC%8A%A4)
 ## 06 Java 배열 정렬 기능   
-### 06-02 Comparable 인터페이스     
+### 06-2 Comparable 인터페이스     
 1) Comparable 인터페이스    
 
-**Comparable 인터페이스를 구현한 클래스 객체의 배열은 Arrays 클래스의 sort 메소드를 사용하여 정렬할 수 있다.**      
+    **Comparable 인터페이스를 구현한 클래스 객체의 배열은 Arrays 클래스의 sort 메소드를 사용하여 정렬할 수 있다.**      
 
 `public static void sort(Comparable[] a);`  
 
@@ -17,7 +17,6 @@ interface Comparable<T> {
 }
 ~~~~
 [Comparable 인터페이스를 구현한 클래스](https://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html)
-
 String 클래스, Integer 클래스도 Comparable 인터페이스를 구현했기 때문에, Arrays.sort 메소드로 정렬할 수 있다.   
 
 2) 기본 자료형 배열과 객체 배열     
@@ -32,10 +31,37 @@ Integer[] b3 = { 10, 11, 12 };
 ~~~~    
 서로 완전히 동일한 배열     
 
-3)
+**Comparable 인터페이스를 구현하면, Arrays.sort 메소드를 사용하여 객체 배열을 정렬할 수 있다.**
+
+~~~~
+public class Person implements Comparable<Person> {
+    @Override public int compareTo(Person p) { int r = this.name.compareTo(p.name); // 먼저 이름(name)을 비교한다. 
+    if (r != 0) return r; // 이름이 같지 않다면, 이름 비교 결과를 리턴한다. 
+    return this.age - p.age; // 이름이 같다면, 나이(age) 비교 결과를 리턴한다. } 
+}
+~~~~    
+
+
+예시)
+~~~~
+public class PersonNameComparator implements Comparator<Person> { 
+    @Override 
+    public int compare(Person p1, Person p2) { 
+        int r = p1.name.compareTo(p2.name); // 먼저 이름(name)을 비교한다. 
+        if (r != 0) return r; // 이름이 같지 않다면, 이름 비교 결과를 리턴한다. 
+        return p1.age - p2.age; // 이름이 같다면, 나이(age) 비교 결과를 리턴한다. } }
+~~~~    
+
+### 06-3 Comparator 인터페이스
+~~~~
+interface Comparator<T> {
+    int compare(T obj1, T obj2);
+}
+~~~~    
+
 ___
 ## 07 Arrays 클래스
-### 07-02 유틸러티 클래스 헬퍼클래스
+### 07-2 유틸러티 클래스 헬퍼클래스
 
 1) 자식클래스  
 
@@ -88,7 +114,7 @@ if (StringUtils.isNullOrBlank(s) == false)
     errorMessage = "내용을 입력하세요";  
 ~~~~
 
-### 07-03 Arrays 클래스
+### 07-3 Arrays 클래스
 1) Arrays 클래스(유틸러티 클래스)   
 
 Arrays 클래스의 메소드는 static method   
