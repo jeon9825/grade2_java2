@@ -1,4 +1,39 @@
 # grade2_java2
+## 목차
+[6 Java 배열 정렬기능]()
+[7 Arrays 클래스](https://github.com/jeon9825/grade2_java2#07-arrays-%ED%81%B4%EB%9E%98%EC%8A%A4)
+## 06 Java 배열 정렬 기능   
+### 06-02 Comparable 인터페이스     
+1) Comparable 인터페이스    
+
+**Comparable 인터페이스를 구현한 클래스 객체의 배열은 Arrays 클래스의 sort 메소드를 사용하여 정렬할 수 있다.**      
+
+`public static void sort(Comparable[] a);`  
+
+**Comparable 인터페이스**   
+~~~~
+interface Comparable<T> {
+    int compareTo(T obj)
+}
+~~~~
+[Comparable 인터페이스를 구현한 클래스](https://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html)
+
+String 클래스, Integer 클래스도 Comparable 인터페이스를 구현했기 때문에, Arrays.sort 메소드로 정렬할 수 있다.   
+
+2) 기본 자료형 배열과 객체 배열     
+
+java언어에서 배열도 일종의 객체!    
+객체는 heap segment 영역에 설정된다.    
+    
+~~~~
+Integer[] b1 = new Integer[] { new Integer(10), new Integer(11), new Integer(12) }; 
+Integer[] b2 = new Integer[] { 10, 11, 12 }; 
+Integer[] b3 = { 10, 11, 12 };
+~~~~    
+서로 완전히 동일한 배열     
+
+3)
+___
 ## 07 Arrays 클래스
 ### 07-02 유틸러티 클래스 헬퍼클래스
 
@@ -29,6 +64,7 @@ class MyString extends String {
 예) `MyString s = "hello";  `  
   
 2) 유틸러티 클래스  
+
 ~~~~
  class StringUtils {   
      public static boolean isNullOrEmpty(String s) {   
@@ -59,6 +95,7 @@ Arrays 클래스의 메소드는 static method
 Arrays 클래스의 메소드는 첫번째 parameter로 받은 *배열*에 대해서 어떤 작업을 하는 메소드(this 객체에 대해서 어떤 작업은 하지않는다.)   
    
 2) Arrays 클래스 메소드
+
 * static List<T> asList(T... a)   
     파라미터 값들로 List<T> 타입의 객체를 생성하여 리턴한다.
     예) `List<String> stringList = Arrays.asList("a","b","c");`
@@ -95,7 +132,7 @@ Arrays 클래스의 메소드는 첫번째 parameter로 받은 *배열*에 대�
     Object 클래스에 int hashCode(); 메소드가 있다. 이 메소드는 this 객체의 hashCode 값을 계산하여 리턴한다. hash table에 객체를 저장할 때 이 hashCode 값이 사용된다.    
 
 * static int deepHashCode(T[] a)        
-    Arrays.hashCode(T[] a) 메소드와 거의 같은 일을 한다.
+    Arrays.hashCode(T[] a) 메소드와 거의 같은 일을 한다.    
     1차원 배열인 경우에는 hashCode 메소드를 사용하고, 다차원 배열인 경우에는 deepHashCode 메소드를 사용해야 한다.   
 
 * static void sort(T[] a)       
@@ -105,20 +142,20 @@ Arrays 클래스의 메소드는 첫번째 parameter로 받은 *배열*에 대�
 
 * static void sort(T[] a, Comparator<T> comparator)     
     배열의 원소를 정렬한다. 정렬하기 위해서 배열의 원소를 비교할 때, comparator의 compare 메소드를 사용한다.    
-    예)
+    예)     
     ~~~~
     Comparator<Person> personComparator = new PersonComparator(Compare.BY_AGE_DESC);
     (중략)
     Arrays.sort(a, personComparator);
-    ~~~~
+    ~~~~    
 
 * static String toString(T[] a)     
     배열의 내용을 문자열로 변환해서 리턴한다.   
 
 * static String deepToString(Object[] a)    
-    다차원 배열의 내용을 문자열로 변환해서 리턴한다.
+    다차원 배열의 내용을 문자열로 변환해서 리턴한다.    
 
-**랜덤 정수 생성 방법** 
+**랜덤 정수 생성 방법**     
 예)     
 ~~~~
 Random random = new Random();
