@@ -16,7 +16,7 @@ interface Comparable<T> {
     int compareTo(T obj)
 }
 ~~~~
-[Comparable 인터페이스를 구현한 클래스](https://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html)
+[Comparable 인터페이스를 구현한 클래스](https://docs.oracle.com/javase/7/docs/api/java/lang/Comparable.html)    
 String 클래스, Integer 클래스도 Comparable 인터페이스를 구현했기 때문에, Arrays.sort 메소드로 정렬할 수 있다.   
 
 2) 기본 자료형 배열과 객체 배열     
@@ -35,9 +35,12 @@ Integer[] b3 = { 10, 11, 12 };
 
 ~~~~
 public class Person implements Comparable<Person> {
-    @Override public int compareTo(Person p) { int r = this.name.compareTo(p.name); // 먼저 이름(name)을 비교한다. 
-    if (r != 0) return r; // 이름이 같지 않다면, 이름 비교 결과를 리턴한다. 
-    return this.age - p.age; // 이름이 같다면, 나이(age) 비교 결과를 리턴한다. } 
+    @Override
+    public int compareTo(Person p) {
+        int r = this.name.compareTo(p.name); // 먼저 이름(name)을 비교한다. 
+        if (r != 0) return r; // 이름이 같지 않다면, 이름 비교 결과를 리턴한다. 
+        return this.age - p.age; // 이름이 같다면, 나이(age) 비교 결과를 리턴한다. 
+    } 
 }
 ~~~~    
 
@@ -58,8 +61,10 @@ interface Comparator<T> {
     int compare(T obj1, T obj2);
 }
 ~~~~    
-
+![내림차순정렬](https://t1.daumcdn.net/cfile/tistory/991812365BB8EBB121)        
 ___
+___
+
 ## 07 Arrays 클래스
 ### 07-2 유틸러티 클래스 헬퍼클래스
 
