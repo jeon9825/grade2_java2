@@ -33,13 +33,13 @@ ___
     *대소문자를 구별하지 않고* 문자열을 비교한다. 리턴값은 compareTo 메소드와 같다.     
 * boolean contains(CharSequence s)      
     파라미터 문자열 s가 this 문자열의 일부와 일치하면 true를 리턴. 즉, 문자열 s가 this 문자열에 들어있으면 true를 리턴한다.     
-* boolean endWith(String s)
+* boolean endWith(String s)     
     this 문자열의 끝이 문자열 s와 일치하면 true를 리턴한다.   
 
 * boolean equals(Object s) ★★★      
     this 문자열이 문자열 s와 일치하면 true를 리턴한다.      
 
-* boolean equalsIgnoreCase(Object s)
+* boolean equalsIgnoreCase(Object s)    
     대소문자를 구별하지않고 this문자열과 문자열 s가 일치하면 true를 리턴한다.    
 
 * static String format(String format, Object... args)   
@@ -50,7 +50,7 @@ ___
     this 문자열에서 문자열 s를 찾아서 그 위치(index)를 리턴한다.    
     this 문자열에 문자열 s가 들어있지않다면 -1를 리턴한다.  
 
-* boolean isEmpty()
+* boolean isEmpty()     
     this문자열의 길이가 0이면 true를 리턴한다.  
 
 * int lastIndexOf(String s)     
@@ -66,6 +66,7 @@ ___
     String s1= "hello";
 	System.out.println(s1.matches("..l..")); // true 출력
     ~~~     
+
 * String replace(CharSequence s1, CharSequence s2)     
     this 문자열에서 문자열 s1을 전부 찾아서 s2로 치환한다. 그렇게 치환된 새 문자열을 리턴한다. this 문자열은 수정되지 않는다.   
 
@@ -82,7 +83,7 @@ System.out.println(s2+"\n"+s3); // hELLo\nh안녕o 출력
     regex 정규식과 일치하는 부분을 기준으로 this 문자열을 쪼갠다. 그렇게 쪼개진 문자열 배열을 리턴한다.
     예) ``
 
-* boolean startsWith(String s)
+* boolean startsWith(String s)      
     this 문자열의 시작 부분이 문자열 s와 일치하면 true를 리턴한다.    
 
 * String substring(int beginIndex)  
@@ -105,6 +106,112 @@ System.out.println(s2+"\n"+s3); // hELLo\nh안녕o 출력
 
 * static String valueOf(double d)    
     d 값을 문자열로 반환하여 리턴한다.  
+
+2) call by value    
+
+**파라미터로 전달될 때, 변수의 값만 복사되어서 전달될 뿐이고 변수 자체가 전달되는 것은 아니다.**    
+
+3) immutable object (값을 수정할 수 없는 객체)     
+
+String 객체는 생성된 두 문자열 값이 수정될 수 없다.     
+String 클래스의 문자열 수정 메소드는, this의 문자열을 수정하는 것이 아니고, *수정된 새 문자열 객체*를 리턴한다.     
+
+4) value object     
+
+5) Object 클래스    
+
+* protected Object clone()  
+    자기 자신을 복제해서 *새 객체를 만들어* 리턴한다.     
+
+* boolean equals(Object obj)    
+    equals 메소드를 제대로 구현했다면, equals 메소드는 this 객체와 파라미터 obj 객체의 내용이 동일한지 비교해야 한다. (equality 비교) 그런데 Object 클래스에 구현된 equals 메소드는 제대로 구현되어 있지 않다. Object 클래스에 구현된 equals 메소드는 객체의 내용을 비교하지 않고 두 객체가 동일한 객체이진 비교한다. (identity 비교)   
+    그래서 **equality를 제대로 비교하려면 자식 클래스에서 이 메소드를 재정의 해야 한다.**   
+
+* protected void finalize()     
+    객체가 더 이상 사용되지 않을 때, 자동으로 객체가 파괴되고 메모리가 회수된다. 이때 객체가 파괴되기 직전에 finalize() 메소드가 호출된다.      
+
+* Class<?> getClass()   
+    객체가 속한 클래스에 대한 정보를 담고 있는 객체를 리턴한다.     
+
+* int hashCode()    
+    객체를 hashtable 테이블 자료구조에 넣을 때 필요한 해쉬 값(hash code value)를 리턴한다.  
+
+* String toString()     
+    객체의 내용을 표현하는 문자열을 리턴한다. 리턴되는 문자열에 객체의 내용이 잘 표현되도록, 자식 클래스에서 이 메소드를 재정의 해야 한다.  
+
+### 02-3 값 타입과 참조 타입
+1) 값 타입(value type)  
+2) 참조 타입(reference type)    
+변수에 값이 아니라 참조가 대입되는 자료형   
+변수가 차지하는 메모리 공간에 들어있는 것은 값이 아니고 참조이다.   
+java 클래스의 객체는 모두 참조타입이다.     
+
+3) [equals 메소드]()    
+
+### 02-4 객체 구조    
+**Stack Segment**   
+**Heap Segment**    
+
+### 02-5 equals 메소드 재정의
+1) instanceof 연산자 ★★★        
+~~~
+Object s = "hello";
+System.out.println(s instanceof String); // true 출력
+~~~
+~~~
+Object s = "hello";
+System.out.println(s instanceof Object); // true 출력
+~~~     
+
+2) @Override 어노테이션의 장점      
+(1) 부모 클래스의 메소드를 자식 클래스에서 재정의 하려면, 메소드 이름, 파라미터 수와 타입, 리턴 타입이 부모 클래스의 메소드와 정확히 일치해야 한다. 예를 들어 equals 메소드의 파라미터 타입은 Object 이어야 하고, 리턴 타입은 boolean 이어야 한다. @Override 어노테이션을 붙여주면, 위 사항들이 정확히 일치하는지 자동으로 검사된다.    
+(2) @Override 어노테이션을 보면, 부모 클래스이 메소드를 재정의한다는 것을 바로 알 수 있어서 소크 코드 읽을 때 편하다.   
+
+3) equals 메소드 재정의     
+    1.      
+    ~~~
+    @Override
+    public boolean equals(Object obj) { 
+        if ((obj instanceof Person) == false) 
+            return false; 
+        Person p = (Person)obj; 
+        return (this.name == null ? p.name == null : this.name.equals(p.name)) && this.age == p.age; 
+    }
+    ~~~
+    2.      
+    ~~~
+    @Override 
+    public boolean equals(Object obj) { 
+        if (obj instanceof Person == false) 
+            return false; 
+        Person p = (Person)obj; 
+        return Objects.equals(this.name, p.name) && this.age == p.age; 
+    }
+    ~~~
+
+4) toString 메소드 재정의   
+~~~
+@Override
+public String toString() { 
+    return String.format("Person{name=\"%s\", age=%d}", name, age); 
+}
+~~~     
+
+### 02-6 String.format 메소드
+1) String.format 메소드 사용법
+이 메소드의 첫째 파라미터는 format string 이다.     
+
+"% [argument index] [flag] [width] [.precision] type"   
+
+[argument index] : 출력할 argument의 index를 지정한다. 이 값이 주어지지 않으면, format string 뒤에 오는 argument들 순서대로 출력된다.   
+
+[flag] : 출력할 값이 숫자일 경우에, flag 가 + 이면 숫자 앞에 언제나 +- 부호를 붙인다. flag 가 0 이면, 숫자 앞에 0을 채워서 출력한다. 출력할 값이 문자열인 경우에, flag 가 - 이면 왼쪽 정렬로 출력되고, flag 가 없으면 오른쪽 정렬로 출력된다.   
+
+[width] : 출력할 최소 폭을 지정한다.    
+
+[.precession] : 숫자일 경우에 소숫점 아래 자릿수를 지정한다. 문자열일 경우에, 출력할 최대 문자수를 지정한다.    
+
+type : 출력할 값의 타입을 지정한다. d 정수, s 문자열, f 실수, x 16진수.     
 
 ___
 ___
