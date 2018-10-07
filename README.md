@@ -1,9 +1,106 @@
 # grade2_java2
  
 ## 목차
+[3 기본 자료형 클래스](https://github.com/jeon9825/grade2_java2#03-기본-자료형-클래스)      
 [5 문자열 클래스](https://github.com/jeon9825/grade2_java2#05-문자열-클래스)     
-[6 Java 배열 정렬기능](https://github.com/jeon9825/grade2_java2#06-java-%EB%B0%B0%EC%97%B4-%EC%A0%95%EB%A0%AC-%EA%B8%B0%EB%8A%A5)    
-[7 Arrays 클래스](https://github.com/jeon9825/grade2_java2#07-arrays-%ED%81%B4%EB%9E%98%EC%8A%A4)
+[6 Java 배열 정렬 기능](https://github.com/jeon9825/grade2_java2#06-java-배열-정렬-기능)    
+[7 Arrays 클래스](https://github.com/jeon9825/grade2_java2#07-arrays-클래스)
+___
+
+## 03 기본 자료형 클래스
+### 03-1 객체배열
+
+* Object 클래스     
+    java의 모든 클래스의 부모 클래스    
+* 부모 클래스의 메소드를 자식 클래스에서 재정의하기 위한 규칙   
+    - 메소드 이름이 정확히 일치해야 한다.   
+    - 파라미터 변수의 수와 타입이 일치해야 한다. (정확히 일치할 필요는 없다.)   
+    - 리턴 타입이 일치해야 한다. (정확히 일치할 필요는 없다.)  
+    
+1) up-casting & down-casting    
+~~~
+class Child extends Parent
+
+Parent p;
+Child c;
+
+p = new Parent("부모1");
+c = new Child("자식1", 15);
+p = new Child("자식2", 16); // up-casting
+c = new Parent(); // 컴파일 에러 down-casting
+c = p; //컴파일 에러!!!!!! down-casting!!!!
+~~~     
+**Java 컴파일러가 컴파일할 때, 참조변수의 타입만 비교할 뿐, 그 참조변수가 가리키는 것이 실제로 어떤 객체인지는 무시**   
+
+2) 배열 클래스      
+3) Object[]     
+기본 자료형은 객체가 아니다.    
+기본 자료형 int는 클래스가 아니기 때문에 int는 Object의 자식클래스가 아니다.    
+123과 같은 정수를 Object 배열에 넣으려면, 먼저 123 정수를 객체로 변환해야한다.  
+
+### 03-2 기본 자료형 클래스   
+1) 기본 자료형 클래스     
+**byte, short, int long, float, double, boolean, char**     
+기본 자료형을 객체로 변환하기 위해서, 기본 자료형 각각에 대한 클래스가 Java 표준 라이브러리에 포함되어 있다.    
+**Wrapper Class**   
+* byte - Byte   
+* short - Short     
+* int - Integer     
+* long - Long   
+* float - Float     
+* double - Double       
+* boolean - Boolean         
+* char - Character  
+
+**기본 자료형 클래스에는 equals 메소드가 재정의되어 있지 않다.**    
+~~~
+Integer x = new Integer(3);
+Integer y = new Integer(3);
+System.out.println(a.equals(b)); // false 출력
+~~~
+
+2) Auto-boxing & Auto-unboxing  
+* Auto-boxing   
+`Object a1 = 3;`     
+`Object a2 = new Integer(3);`
+둘은 같은 코드   
+컴파일러가 윗 코드를 아래코드로 자동으로 생성 Autoboxing    
+
+* Auto-unboxing
+~~~
+Integer i1 = new Integer(3);
+int i2 = i1;    
+~~~
+`int i2 = i1.intValue();`   
+
+3) nullable integer
+null 값이 가능한 int값을 java 변수에 대입하려면 기본 자료형이 int 변수를 사용할 수 없고 Integer 객체 참조 변수를 사용해야한다.  
+
+### 03-3 static member
+1) static member variable & static method   
+
+2) static 메소드의 제약
+static method <-> instance method
+**static 메소드는 this 키워드를 사용할 수 없고 instance 메소드는 this 키워드를 사용할 수 있다.**    
+static 메소드는 this가 아닌 다른 객체 인스턴스의 멤버 변수나 메소드는 사용할 수 있다.   
+
+3) static constructor (생성자)  
+main 메소드보다 먼저 호출된다.
+~~~
+public class Person { 
+    static int staticVariable; 
+    static { 
+        staticVariable = 0;
+    }
+}
+~~~
+
+~~~
+public class Person { 
+    static int staticVariable = 0; 
+}
+~~~
+___
 ___
 
 ## 05 문자열 클래스
