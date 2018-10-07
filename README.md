@@ -1,7 +1,139 @@
 # grade2_java2
+ 
 ## 목차
+[5 문자열 클래스](https://github.com/jeon9825/grade2_java2#05-문자열-클래스)     
 [6 Java 배열 정렬기능](https://github.com/jeon9825/grade2_java2#06-java-%EB%B0%B0%EC%97%B4-%EC%A0%95%EB%A0%AC-%EA%B8%B0%EB%8A%A5)    
 [7 Arrays 클래스](https://github.com/jeon9825/grade2_java2#07-arrays-%ED%81%B4%EB%9E%98%EC%8A%A4)
+___
+
+## 05 문자열 클래스
+### 05-1 Java 문자열
+1) java 문자열의 종류
+![CharSequence]](https://t1.daumcdn.net/cfile/tistory/993258405BB8ED7C2C)   
+
+**CharSequence interface**  
+String, StringBuilder, StringBuffer의 부모클래스    
+
+**String 클래스**   
+String 객체는 생성된 뒤 문자열 값이 수정될 수 없다.     
+String 클래스의 문자열 수정 메소드는, this 문자열을 수정하는 것이 아니고, 수정된 새 문자열 객체를 리턴한다. this 문자열은 수정되지 않는다.(immutable class)     
+
+**StringBuilder**
+수정 가능한 문자열 객체는 StringBuilder 클래스이다.     
+StringBuilder 클래스의 문자열 수정 메소드는 내부 문자열을 직접 수정한다.    
+
+**StringBuffer**
+StringBuffer 클래스는 StringBuilder 클래스와 *기능이 같고 메소드도 같고 사용법도 같다.*   
+차이점은 StringBuffer는 thread safe 하지만 StringBuilder는 thread safe 하지 않다는 점이다.      
+thread safe 하다는 말은 멀티 스레드(multi-thread)로 실행되어도 안전하다는 말이다.   
+그렇기 때문에, StringBuilder 보다 느리다.   
+따라서 thread safe 해야 할 때에만 StringBuffer를 사용해야 한다.     
+
+2) CharSequence 인터페이스 메소드
+~~~~
+package java.lang;      
+public interface CharSequence {
+    char charAt(int index); 
+    int length(); 
+    CharSequence subSequence(int beginIndex, int endIndex); 
+    String toString();          
+}   
+~~~~    
+*interface의 메소드는 기본적으로 public abstract 메소드이다.*   
+* char charAt(int index)        
+    this 문자열에서 index 위치의 문자를 char로 리턴     
+* int length()      
+    문자열의 길이를 리턴    
+* CharSequence subSequence(int beginIndex, int endIndex)    
+    this 문자열에서 beginIndex 위치(inclusive)에서 endIndex직전까지(exclusive)의 문자열을 리턴한다.     
+* String toString()
+    내부 문자열을 String 클래스 객체로 리턴한다.
+
+**인터페이스를 implements한 클래스는 인터페이스의 메소드를 재정의(override)해야한다.**  
+**인터페이스를 implements한 클래스가 abstract 클래스가 아니라면, 인터페이스의 메소드를 전부 재정의해야한다.     그렇지 않더라면 *컴파일 에러*가 발생한다.**     
+
+
+3) StringBuilder 클래스 메소드      
+**StringBuilder가 리턴타입일 경우, 리턴 값은 this 객체이다.**   
+**append(s) 함수**      
+* StringBuilder append(CharSequence s)      
+    문자열 s를 this 문자열 뒤에 추가한다. 이 메소드의 리턴 값은 this 객체이다.
+
+* StringBuilder append(int i)   
+    i 값을 문자열로 변환하여 this 문자열 뒤에 추가한다. 이 메소드의 리턴 값은 this 객체이다.    
+
+* StringBuilder append(Double d)        
+    d 값을 문자열로 변환하여 this 문자열 뒤에 추가한다. 이 메소드의 리턴 값은 this 객체이다.        
+
+* char charAt(int index)        
+    this 문자열에서 index 위치의 문자(char)를 리턴한다.   
+
+* StringBuilder delete(int beginIndex, int endIndex)   
+    this 문자열에서 beginIndex 위치에서 endIndex 직전까지의 문자열을 삭제한다. 이 메소드의 리턴 값은 this 객체이다.  
+
+* StringBuilder deleteCharAt(int index)   
+    this 문자열에서 index 위치의 문자를 삭제한다. 이 메소드의 리턴 값은 this 객체이다.      
+
+* int indexOf(String s)      
+    this 문자열에서 문자열 s를 찾아서 그 위치(index)를 리턴한다. this 문자열에 문자열 s가 들어있지 않다면 -1을 리턴한다.    
+
+* StringBuilder insert(int index, CharSequence s)       
+    this 문자열의 index 위치에 문자열 s를 끼워 넣는다. 이 메소드의 리턴 값은 this 객체이다.     
+
+* StringBuilder insert(int index, Object obj)   
+    obj 객체를 문자열로 변환하여 this 문자열의 index 위치에 끼워 넣는다. 이 메소드의 리턴 값은 this 객체이다.   
+
+* int lastIndexOf(String s)         
+    this 문자열에서 문자열 s를 찾아서 그 위치(index)를 리턴한다. 문자열 s가 여러 번 들어있다면 마지막 위치를 리턴한다. this 문자열에 문자열 s가 들어있지 않다면 -1을 리턴한다.      
+
+* int length()  
+    문자열의 길이를 리턴한다.   
+
+* StringBuilder replace(int beginIndex, int endIndex, String s)     
+    this 문자열에서 beginIndex 위치에서 endIndex 직전까지의 문자열을 문자열 s로 치환한다. 이 메소드의 리턴 값은 this 객체이다.      
+
+* StringBuilder reverse()   
+    문자열을 거꾸로 뒤집는다. 이 메소드의 리턴 값은 this 객체이다.      
+
+* void setCharAt(int index, char c)     
+    this 문자열에서 index 위치의 문자를 c로 변경한다.   
+
+* CharSequence subSequence(int start, int end)          
+    this 문자열에서 beginIndex 위치에서 endIndex 직전까지의 문자열을 리턴한다. this 문자열은 수정되지 않는다.   
+    **subString과의 차이점은 subSequence메소드는 CharSequence 인터페이스에 선언되어 있고 리턴 타입이 CharSequence이다.**    
+
+* String substring(int beginIndex)  
+    this 문자열에서 beginIndex 위치에서 끝까지의 문자열을 리턴한다. this 문자열은 수정되지 않는다.  
+
+* String substring(int beginIndex, int endIndex)    
+    this 문자열에서 beginIndex 위치에서 endIndex 직전까지의 문자열을 리턴한다. this 문자열은 수정되지 않는다.   
+
+* String toString()         
+    this 문자열을 String 객체로 변환하여 리턴한다.      
+    **StringBuilder를 이용한 어떤 메소드를 만들 때 리턴값이 String일 경우 toString을 이용하여 반환한다.**
+
+4) equals 메소드
+* String 클래스는 equals 메소드를 재정의(override)하였기 때문에 문자열 값이 일치하면 true를 리턴한다.       
+* StringBuilder 클래스는 Object의 equals 메소드를 상속받았기 때문에 문자열이 동일해도 false가 리턴된다.         
+
+### 05-2 예제코드   
+~~~~
+StringBuilder builder = new StringBuilder();    
+for (String s : list) {
+    if (builder.length() > 0) 
+        builder.append(", "); 
+    builder.append('"'); 
+    builder.append(s); 
+    builder.append('"'); 
+    // builder.append('"').append(s).append('"');와 같은 코드
+    // 메소드 호출을 연속해서 구현하는 코딩 기법(method chaining)
+    // 리턴 타입이 StringBuilder인 이유가 method chaining 코딩 기법을 활용하기 위함.
+}   
+System.out.println(builder.toString());
+~~~~    
+___
+___
+
 ## 06 Java 배열 정렬 기능   
 ### 06-2 Comparable 인터페이스     
 1) Comparable 인터페이스    
@@ -62,6 +194,9 @@ interface Comparator<T> {
 }
 ~~~~    
 ![내림차순정렬](https://t1.daumcdn.net/cfile/tistory/991812365BB8EBB121)        
+내림차순 정렬   
+객체를 정렬하는 경우엔 Comparator 클래스의 compare 메소드를 수정하면 내림차순 정렬이 가능하다. 윗 코드 참조.    
+
 ___
 ___
 
