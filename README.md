@@ -9,7 +9,7 @@ ___
 ## 05 문자열 클래스
 ### 05-1 Java 문자열
 1) java 문자열의 종류   
-![CharSequence]](https://t1.daumcdn.net/cfile/tistory/993258405BB8ED7C2C)   
+![CharSequence](https://t1.daumcdn.net/cfile/tistory/993258405BB8ED7C2C)   
 
 **CharSequence interface**  
 String, StringBuilder, StringBuffer의 부모 인터페이스   
