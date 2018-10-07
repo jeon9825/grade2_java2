@@ -1,11 +1,16 @@
 # grade2_java2
  
 ## 목차
+[2 기본 자료형과 참조형](https://github.com/jeon9825/grade2_java2#02-기본-자료형과-참조형)    
 [3 기본 자료형 클래스](https://github.com/jeon9825/grade2_java2#03-기본-자료형-클래스)      
 [5 문자열 클래스](https://github.com/jeon9825/grade2_java2#05-문자열-클래스)     
 [6 Java 배열 정렬 기능](https://github.com/jeon9825/grade2_java2#06-java-배열-정렬-기능)    
 [7 Arrays 클래스](https://github.com/jeon9825/grade2_java2#07-arrays-클래스)
 ___
+
+
+## 02 기본 자료형과 참조형
+
 
 ## 03 기본 자료형 클래스
 ### 03-1 객체배열
@@ -42,6 +47,8 @@ c = p; //컴파일 에러!!!!!! down-casting!!!!
 1) 기본 자료형 클래스     
 **byte, short, int long, float, double, boolean, char**     
 기본 자료형을 객체로 변환하기 위해서, 기본 자료형 각각에 대한 클래스가 Java 표준 라이브러리에 포함되어 있다.    
+
+
 **Wrapper Class**   
 * byte - Byte   
 * short - Short     
@@ -61,26 +68,28 @@ System.out.println(a.equals(b)); // false 출력
 
 2) Auto-boxing & Auto-unboxing  
 * Auto-boxing   
+
 `Object a1 = 3;`     
 `Object a2 = new Integer(3);`
 둘은 같은 코드   
 컴파일러가 윗 코드를 아래코드로 자동으로 생성 Autoboxing    
 
 * Auto-unboxing
+
 ~~~
 Integer i1 = new Integer(3);
 int i2 = i1;    
 ~~~
 `int i2 = i1.intValue();`   
 
-3) nullable integer
+3) nullable integer     
 null 값이 가능한 int값을 java 변수에 대입하려면 기본 자료형이 int 변수를 사용할 수 없고 Integer 객체 참조 변수를 사용해야한다.  
 
 ### 03-3 static member
 1) static member variable & static method   
 
-2) static 메소드의 제약
-static method <-> instance method
+2) static 메소드의 제약         
+static method <-> instance method       
 **static 메소드는 this 키워드를 사용할 수 없고 instance 메소드는 this 키워드를 사용할 수 있다.**    
 static 메소드는 this가 아닌 다른 객체 인스턴스의 멤버 변수나 메소드는 사용할 수 있다.   
 
