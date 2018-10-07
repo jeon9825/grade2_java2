@@ -1,5 +1,8 @@
 # grade2_java2
  
+## 아직 해결하지 못한 문제
+Q. Integer 클래스가 immutable인 이유는 무엇인가?    
+
 ## 목차
 [2 기본 자료형과 참조형](https://github.com/jeon9825/grade2_java2#02-기본-자료형과-참조형)    
 [3 기본 자료형 클래스](https://github.com/jeon9825/grade2_java2#03-기본-자료형-클래스)      
@@ -11,6 +14,100 @@ ___
 
 ## 02 기본 자료형과 참조형
 
+### 02-1 Java 소스 파일 규칙
+1) Java 소스파일과 패키지 규칙
+    1. 소스코드 파일 하나에 public 클래스는 한 개만 있어야 한다.    
+    2. public 아닌 클래스는 소스 코드 파일에 여러개 있어도 된다.    
+    3. public 클래스 이름과 소스 코드 파일명이 *대소문자*까지 정확하게 일치해야 한다.   
+    4. 클래스가 속한 패키지 이름과 소스 코드 파일이 위치한 폴더 이름이 *대소문자*까지 정확하게 일치해야한다.  
+
+## 02-2 String 클래스 & Object 클래스
+1) String 클래스
+* char charAt(int index)    
+    this 문자열에서 index 위치의 문자를 char로 리턴한다.    
+
+* int compareTo(String s)   
+    문자열을 알파벳 순서로 비교한다. this 문자열의 순서가 빠르면 음수를, s 문자열의 순서가 빠르면 양수를, 두 문자열이 같으면 0을 리턴한다.  
+
+* int compareToIgnoreCase(String s)     
+    *대소문자를 구별하지 않고* 문자열을 비교한다. 리턴값은 compareTo 메소드와 같다.     
+* boolean contains(CharSequence s)      
+    파라미터 문자열 s가 this 문자열의 일부와 일치하면 true를 리턴. 즉, 문자열 s가 this 문자열에 들어있으면 true를 리턴한다.     
+* boolean endWith(String s)
+    this 문자열의 끝이 문자열 s와 일치하면 true를 리턴한다.   
+
+* boolean equals(Object s) ★★★      
+    this 문자열이 문자열 s와 일치하면 true를 리턴한다.      
+
+* boolean equalsIgnoreCase(Object s)
+    대소문자를 구별하지않고 this문자열과 문자열 s가 일치하면 true를 리턴한다.    
+
+* static String format(String format, Object... args)   
+    첫번째 파라미터는 format string이다.    
+    예) `System.out.println(String.format("%10d",a1);`   
+
+* int indexOf(String s)     
+    this 문자열에서 문자열 s를 찾아서 그 위치(index)를 리턴한다.    
+    this 문자열에 문자열 s가 들어있지않다면 -1를 리턴한다.  
+
+* boolean isEmpty()
+    this문자열의 길이가 0이면 true를 리턴한다.  
+
+* int lastIndexOf(String s)     
+    indexOf(String s) 메소드와 비슷하다.    
+    문자열 s가 여러번 들어 있다면 마지막 위치를 리턴한다.   
+
+* int length()  
+    문자열의 길이를 리턴한다.   
+
+* boolean matches(String regex)     
+    파라미터로 주어진 regex 정규식(reqular express)과 this 문자열이 일치하면 true를 리턴한다.   
+    ~~~
+    String s1= "hello";
+	System.out.println(s1.matches("..l..")); // true 출력
+    ~~~     
+* String replace(CharSequence s1, CharSequence s2)     
+    this 문자열에서 문자열 s1을 전부 찾아서 s2로 치환한다. 그렇게 치환된 새 문자열을 리턴한다. this 문자열은 수정되지 않는다.   
+
+* String replaceAll(String regex, String s2)    
+    this 문자열에서 regex 정규식과 일치하는 부분을 전부 찾아서 s2로 치환한다. 그렇게 치환된 새 문자열을 리턴한다. this 문자열은 수정되지 않는다.    
+~~~
+String s1 = "hello";
+String s2 = s1.replace("ell", "ELL");
+String s3 = s1.replaceAll(".l.", "안녕");
+System.out.println(s2+"\n"+s3); // hELLo\nh안녕o 출력 
+~~~     
+
+* String[] split(String regex)  
+    regex 정규식과 일치하는 부분을 기준으로 this 문자열을 쪼갠다. 그렇게 쪼개진 문자열 배열을 리턴한다.
+    예) ``
+
+* boolean startsWith(String s)
+    this 문자열의 시작 부분이 문자열 s와 일치하면 true를 리턴한다.    
+
+* String substring(int beginIndex)  
+    this 문자열에서 beginIndex 위치에서 끝까지의 문자열을 리턴한다. this 문자열은 수정되지 않는다.         
+
+* String substring(int beginIndex, int endIndex)    
+    this 문자열에서 beginIndex 위치에서 endIndex 직전까지의 문자열을 리턴한다. this 문자열은 수정되지 않는다.   
+
+* String trim()     
+    this 문자열의 시작 부분과 끝 부분의 공백을 제거한 새 문자열을 리턴한다. this 문자열은 수정되지 않는다.    
+
+* String toLowerCase()  
+    this 문자열에서 모든 대문자를 소문자로 변경한 새 문자열을 리턴한다. this 문자열은 수정되지 않는다.  
+
+* String toUpperCase()      
+    this 문자열에서 모든 소문자를 대문자로 변경한 새 문자열을 리턴한다. this 문자열은 수정되지 않는다.
+
+* static String valueOf(int i)  
+    i 값을 문자열로 반환하여 리턴한다.  
+
+* static String valueOf(double d)    
+    d 값을 문자열로 반환하여 리턴한다.  
+
+___
+___
 
 ## 03 기본 자료형 클래스
 ### 03-1 객체배열
@@ -21,7 +118,8 @@ ___
     - 메소드 이름이 정확히 일치해야 한다.   
     - 파라미터 변수의 수와 타입이 일치해야 한다. (정확히 일치할 필요는 없다.)   
     - 리턴 타입이 일치해야 한다. (정확히 일치할 필요는 없다.)  
-    
+* @Override 어노테이션을 붙여주면, 실수를 막을 수 있다. 오타 등의 실수 때문에, 재정의 규칙이 깨지면, 컴파일 에러가 발생하기 때문에, 실수를 막을 수 있다.    
+
 1) up-casting & down-casting    
 ~~~
 class Child extends Parent
@@ -34,10 +132,13 @@ c = new Child("자식1", 15);
 p = new Child("자식2", 16); // up-casting
 c = new Parent(); // 컴파일 에러 down-casting
 c = p; //컴파일 에러!!!!!! down-casting!!!!
-~~~     
+~~~
+**자식 객체 타입의 참조 값을 부모 객체 타입의 참조 변수에 대입하는 것은 문제가 없다(up-casting)**   
 **Java 컴파일러가 컴파일할 때, 참조변수의 타입만 비교할 뿐, 그 참조변수가 가리키는 것이 실제로 어떤 객체인지는 무시**   
 
-2) 배열 클래스      
+2) 배열 클래스   
+**java 언어에서 배열도 어떤 클래스의 객체이다.**    
+
 3) Object[]     
 기본 자료형은 객체가 아니다.    
 기본 자료형 int는 클래스가 아니기 때문에 int는 Object의 자식클래스가 아니다.    
@@ -119,6 +220,7 @@ ___
 
 **CharSequence interface**  
 String, StringBuilder, StringBuffer의 부모 인터페이스   
+공통 부모 인터페이스를 구현(implements)한 클래스들은, 인터페이스에 선언된 메소드를 전부 구현해야 한다. 호환되는 클래스를 만들기 위해서 인터페이스를 활용한다.   
 
 **String 클래스**   
 String 객체는 생성된 뒤 문자열 값이 수정될 수 없다.     
@@ -221,8 +323,19 @@ public interface CharSequence {
     **StringBuilder를 이용한 어떤 메소드를 만들 때 리턴값이 String일 경우 toString을 이용하여 반환한다.**
 
 4) equals 메소드
+
 * String 클래스는 equals 메소드를 재정의(override)하였기 때문에 문자열 값이 일치하면 true를 리턴한다.       
 * StringBuilder 클래스는 Object의 equals 메소드를 상속받았기 때문에 문자열이 동일해도 false가 리턴된다.         
+
+~~~
+StringBuilder sb1 = new StringBuilder();
+sb1.append("안녕");
+StringBuilder sb2 = new StringBuilder();
+sb2.append("안녕");
+System.out.println(sb1.equals(sb2)); // 출력값 false
+~~~     
+에러는 발생하지 않는다. (Object 클래스를 상속하고 있기 때문에)  
+문자열을 조립해서 생성할 때만 잠깐 StringBuilder 객체를 사용하라는 의미에서 equals 메소드가 재정의되지 않았다.  
 
 ### 05-2 예제코드   
 ~~~~
