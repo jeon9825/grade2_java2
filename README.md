@@ -22,7 +22,7 @@ ___
     4. 클래스가 속한 패키지 이름과 소스 코드 파일이 위치한 폴더 이름이 *대소문자*까지 정확하게 일치해야한다.  
 
 ## 02-2 String 클래스 & Object 클래스
-1) String 클래스
+1) String 클래스    
 * char charAt(int index)    
     this 문자열에서 index 위치의 문자를 char로 리턴한다.    
 
@@ -139,6 +139,17 @@ String 클래스의 문자열 수정 메소드는, this의 문자열을 수정�
 * String toString()     
     객체의 내용을 표현하는 문자열을 리턴한다. 리턴되는 문자열에 객체의 내용이 잘 표현되도록, 자식 클래스에서 이 메소드를 재정의 해야 한다.  
 
+~~~
+String[] s = { "one", "two", "three" };
+System.out.println(s.toString());
+System.out.println(s);
+System.out.println(Arrays.toString(s));
+/* 출력값
+[Ljava.lang.String;@74a14482
+[Ljava.lang.String;@74a14482
+[one, two, three]
+*/
+~~~
 ### 02-3 값 타입과 참조 타입
 1) 값 타입(value type)  
 2) 참조 타입(reference type)    
@@ -146,7 +157,7 @@ String 클래스의 문자열 수정 메소드는, this의 문자열을 수정�
 변수가 차지하는 메모리 공간에 들어있는 것은 값이 아니고 참조이다.   
 java 클래스의 객체는 모두 참조타입이다.     
 
-3) [equals 메소드]()    
+3) [equals 메소드](https://github.com/jeon9825/grade2_java2#02-5-equals-메소드-재정의)    
 
 ### 02-4 객체 구조    
 **Stack Segment**   
@@ -168,7 +179,7 @@ System.out.println(s instanceof Object); // true 출력
 (2) @Override 어노테이션을 보면, 부모 클래스이 메소드를 재정의한다는 것을 바로 알 수 있어서 소크 코드 읽을 때 편하다.   
 
 3) equals 메소드 재정의     
-    1.      
+1.      
     ~~~
     @Override
     public boolean equals(Object obj) { 
@@ -178,7 +189,7 @@ System.out.println(s instanceof Object); // true 출력
         return (this.name == null ? p.name == null : this.name.equals(p.name)) && this.age == p.age; 
     }
     ~~~
-    2.      
+2.      
     ~~~
     @Override 
     public boolean equals(Object obj) { 
@@ -201,7 +212,7 @@ public String toString() {
 1) String.format 메소드 사용법
 이 메소드의 첫째 파라미터는 format string 이다.     
 
-"% [argument index] [flag] [width] [.precision] type"   
+`% [argument index] [flag] [width] [.precision] type`    
 
 [argument index] : 출력할 argument의 index를 지정한다. 이 값이 주어지지 않으면, format string 뒤에 오는 argument들 순서대로 출력된다.   
 
@@ -267,7 +278,7 @@ c = p; //컴파일 에러!!!!!! down-casting!!!!
 * boolean - Boolean         
 * char - Character  
 
-**기본 자료형 클래스에는 equals 메소드가 재정의되어 있지 않다.**    
+**기본 자료형 클래스에는 equals 메소드가 재정의되어있음.**    
 ~~~
 Integer x = new Integer(3);
 Integer y = new Integer(3);
