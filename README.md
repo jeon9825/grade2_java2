@@ -8,21 +8,21 @@ ___
 
 ## 05 문자열 클래스
 ### 05-1 Java 문자열
-1) java 문자열의 종류
+1) java 문자열의 종류   
 ![CharSequence]](https://t1.daumcdn.net/cfile/tistory/993258405BB8ED7C2C)   
 
 **CharSequence interface**  
-String, StringBuilder, StringBuffer의 부모클래스    
+String, StringBuilder, StringBuffer의 부모 인터페이스   
 
 **String 클래스**   
 String 객체는 생성된 뒤 문자열 값이 수정될 수 없다.     
-String 클래스의 문자열 수정 메소드는, this 문자열을 수정하는 것이 아니고, 수정된 새 문자열 객체를 리턴한다. this 문자열은 수정되지 않는다.(immutable class)     
+String 클래스의 문자열 수정 메소드는, this 문자열을 수정하는 것이 아니고, 수정된 새 문자열 객체를 리턴한다. this 문자열은 수정되지 않는다. (immutable class)     
 
-**StringBuilder**
+**StringBuilder**   
 수정 가능한 문자열 객체는 StringBuilder 클래스이다.     
 StringBuilder 클래스의 문자열 수정 메소드는 내부 문자열을 직접 수정한다.    
 
-**StringBuffer**
+**StringBuffer**    
 StringBuffer 클래스는 StringBuilder 클래스와 *기능이 같고 메소드도 같고 사용법도 같다.*   
 차이점은 StringBuffer는 thread safe 하지만 StringBuilder는 thread safe 하지 않다는 점이다.      
 thread safe 하다는 말은 멀티 스레드(multi-thread)로 실행되어도 안전하다는 말이다.   
@@ -54,7 +54,9 @@ public interface CharSequence {
 
 
 3) StringBuilder 클래스 메소드      
-**StringBuilder가 리턴타입일 경우, 리턴 값은 this 객체이다.**   
+
+**StringBuilder가 리턴타입일 경우, 리턴 값은 this 객체이다.**       
+
 **append(s) 함수**      
 * StringBuilder append(CharSequence s)      
     문자열 s를 this 문자열 뒤에 추가한다. 이 메소드의 리턴 값은 this 객체이다.
@@ -125,8 +127,8 @@ for (String s : list) {
     builder.append('"'); 
     builder.append(s); 
     builder.append('"'); 
-    // builder.append('"').append(s).append('"');와 같은 코드
-    // 메소드 호출을 연속해서 구현하는 코딩 기법(method chaining)
+    // builder.append('"').append(s).append('"'); 와 같은 코드
+    // 메소드 호출을 연속해서 구현하는 코딩 기법 (method chaining)
     // 리턴 타입이 StringBuilder인 이유가 method chaining 코딩 기법을 활용하기 위함.
 }   
 System.out.println(builder.toString());
