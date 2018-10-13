@@ -62,7 +62,7 @@ ___
 
 * boolean matches(String regex)     
     파라미터로 주어진 regex 정규식(reqular express)과 this 문자열이 일치하면 true를 리턴한다.   
-    ~~~
+    ~~~java
     String s1= "hello";
 	System.out.println(s1.matches("..l..")); // true 출력
     ~~~     
@@ -72,7 +72,7 @@ ___
 
 * String replaceAll(String regex, String s2)    
     this 문자열에서 regex 정규식과 일치하는 부분을 전부 찾아서 s2로 치환한다. 그렇게 치환된 새 문자열을 리턴한다. this 문자열은 수정되지 않는다.    
-~~~
+~~~java
 String s1 = "hello";
 String s2 = s1.replace("ell", "ELL");
 String s3 = s1.replaceAll(".l.", "안녕");
@@ -139,7 +139,7 @@ String 클래스의 문자열 수정 메소드는, this의 문자열을 수정�
 * String toString()     
     객체의 내용을 표현하는 문자열을 리턴한다. 리턴되는 문자열에 객체의 내용이 잘 표현되도록, 자식 클래스에서 이 메소드를 재정의 해야 한다.  
 
-~~~
+~~~java
 String[] s = { "one", "two", "three" };
 System.out.println(s.toString());
 System.out.println(s);
@@ -165,11 +165,11 @@ java 클래스의 객체는 모두 참조타입이다.
 
 ### 02-5 equals 메소드 재정의
 1) instanceof 연산자 ★★★        
-~~~
+~~~java
 Object s = "hello";
 System.out.println(s instanceof String); // true 출력
 ~~~
-~~~
+~~~java
 Object s = "hello";
 System.out.println(s instanceof Object); // true 출력
 ~~~     
@@ -180,7 +180,7 @@ System.out.println(s instanceof Object); // true 출력
 
 3) equals 메소드 재정의     
 1.      
-    ~~~
+    ~~~java
     @Override
     public boolean equals(Object obj) { 
         if ((obj instanceof Person) == false) 
@@ -190,7 +190,7 @@ System.out.println(s instanceof Object); // true 출력
     }
     ~~~
 2.      
-    ~~~
+    ~~~java
     @Override 
     public boolean equals(Object obj) { 
         if (obj instanceof Person == false) 
@@ -201,7 +201,7 @@ System.out.println(s instanceof Object); // true 출력
     ~~~
 
 4) toString 메소드 재정의   
-~~~
+~~~java
 @Override
 public String toString() { 
     return String.format("Person{name=\"%s\", age=%d}", name, age); 
@@ -239,7 +239,7 @@ ___
 * @Override 어노테이션을 붙여주면, 실수를 막을 수 있다. 오타 등의 실수 때문에, 재정의 규칙이 깨지면, 컴파일 에러가 발생하기 때문에, 실수를 막을 수 있다.    
 
 1) up-casting & down-casting    
-~~~
+~~~java
 class Child extends Parent
 
 Parent p;
@@ -279,7 +279,7 @@ c = p; //컴파일 에러!!!!!! down-casting!!!!
 * char - Character  
 
 **기본 자료형 클래스에는 equals 메소드가 재정의되어있음.**    
-~~~
+~~~java
 Integer x = new Integer(3);
 Integer y = new Integer(3);
 System.out.println(a.equals(b)); // false 출력
@@ -295,7 +295,7 @@ System.out.println(a.equals(b)); // false 출력
 
 * Auto-unboxing
 
-~~~
+~~~java
 Integer i1 = new Integer(3);
 int i2 = i1;    
 ~~~
@@ -314,7 +314,7 @@ static 메소드는 this가 아닌 다른 객체 인스턴스의 멤버 변수�
 
 3) static constructor (생성자)  
 main 메소드보다 먼저 호출된다.
-~~~
+~~~java
 public class Person { 
     static int staticVariable; 
     static { 
@@ -323,7 +323,7 @@ public class Person {
 }
 ~~~
 
-~~~
+~~~java
 public class Person { 
     static int staticVariable = 0; 
 }
@@ -356,7 +356,7 @@ thread safe 하다는 말은 멀티 스레드(multi-thread)로 실행되어도 �
 따라서 thread safe 해야 할 때에만 StringBuffer를 사용해야 한다.     
 
 2) CharSequence 인터페이스 메소드
-~~~~
+~~~~java
 package java.lang;      
 public interface CharSequence {
     char charAt(int index); 
@@ -445,7 +445,7 @@ public interface CharSequence {
 * String 클래스는 equals 메소드를 재정의(override)하였기 때문에 문자열 값이 일치하면 true를 리턴한다.       
 * StringBuilder 클래스는 Object의 equals 메소드를 상속받았기 때문에 문자열이 동일해도 false가 리턴된다.         
 
-~~~
+~~~java
 StringBuilder sb1 = new StringBuilder();
 sb1.append("안녕");
 StringBuilder sb2 = new StringBuilder();
@@ -456,7 +456,7 @@ System.out.println(sb1.equals(sb2)); // 출력값 false
 문자열을 조립해서 생성할 때만 잠깐 StringBuilder 객체를 사용하라는 의미에서 equals 메소드가 재정의되지 않았다.  
 
 ### 05-2 예제코드   
-~~~~
+~~~~java
 StringBuilder builder = new StringBuilder();    
 for (String s : list) {
     if (builder.length() > 0) 
@@ -482,7 +482,7 @@ ___
 `public static void sort(Comparable[] a);`  
 
 **Comparable 인터페이스**   
-~~~~
+~~~~java
 interface Comparable<T> {
     int compareTo(T obj)
 }
@@ -495,7 +495,7 @@ String 클래스, Integer 클래스도 Comparable 인터페이스를 구현했�
 java언어에서 배열도 일종의 객체!    
 객체는 heap segment 영역에 설정된다.    
     
-~~~~
+~~~~java
 Integer[] b1 = new Integer[] { new Integer(10), new Integer(11), new Integer(12) }; 
 Integer[] b2 = new Integer[] { 10, 11, 12 }; 
 Integer[] b3 = { 10, 11, 12 };
@@ -504,7 +504,7 @@ Integer[] b3 = { 10, 11, 12 };
 
 **Comparable 인터페이스를 구현하면, Arrays.sort 메소드를 사용하여 객체 배열을 정렬할 수 있다.**
 
-~~~~
+~~~~java
 public class Person implements Comparable<Person> {
     @Override
     public int compareTo(Person p) {
@@ -517,7 +517,7 @@ public class Person implements Comparable<Person> {
 
 
 예시)
-~~~~
+~~~~java
 public class PersonNameComparator implements Comparator<Person> { 
     @Override 
     public int compare(Person p1, Person p2) { 
@@ -527,7 +527,7 @@ public class PersonNameComparator implements Comparator<Person> {
 ~~~~    
 
 ### 06-3 Comparator 인터페이스
-~~~~
+~~~~java
 interface Comparator<T> {
     int compare(T obj1, T obj2);
 }
@@ -548,7 +548,7 @@ ___
 만약 그 클래스를 수정할 수 없다면, 자식클래스를 만들어서 메소드를 추가로 구현하면 된다.  
   
 아래의 코드는 String 클래스를 상속받은 MyString이라는 자식클래스를 만들었다.   
-~~~~
+~~~~java
 class MyString extends String {   
     public MyString(String s){   
         super(s);   
@@ -570,7 +570,7 @@ class MyString extends String {
   
 2) 유틸러티 클래스  
 
-~~~~
+~~~~java
  class StringUtils {   
      public static boolean isNullOrEmpty(String s) {   
          return s == null || s.length() == 0;  
@@ -587,7 +587,7 @@ StringUtils 클래스의 모든 메소드는 static메소드!
 *StringUtils 클래스의 멤버 변수를 사용할 일이 없기 때문이다.*   
 다음과 같이 사용한다.  
   
-~~~~
+~~~~java
 String s = "hello";  
 if (StringUtils.isNullOrBlank(s) == false)   
     errorMessage = "내용을 입력하세요";  
@@ -648,7 +648,7 @@ Arrays 클래스의 메소드는 첫번째 parameter로 받은 *배열*에 대�
 * static void sort(T[] a, Comparator<T> comparator)     
     배열의 원소를 정렬한다. 정렬하기 위해서 배열의 원소를 비교할 때, comparator의 compare 메소드를 사용한다.    
     예)     
-    ~~~~
+    ~~~~java
     Comparator<Person> personComparator = new PersonComparator(Compare.BY_AGE_DESC);
     (중략)
     Arrays.sort(a, personComparator);
@@ -662,7 +662,7 @@ Arrays 클래스의 메소드는 첫번째 parameter로 받은 *배열*에 대�
 
 **랜덤 정수 생성 방법**     
 예)     
-~~~~
+~~~~java
 Random random = new Random();
 int i = random.nextInt(10);
 ~~~~    
