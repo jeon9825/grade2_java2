@@ -669,7 +669,7 @@ int i = random.nextInt(10);
 Random 클래스의 int nextInt(int n) 메소드는 0~n-1 정수 중의 하나를 랜덤하게 골라서 리턴  
 
 ## 08 다형성 구현   
-###08-01 배경지식   
+### 08-01 배경지식      
 
 1) 객체 지향 설계    
 1. 상속
@@ -723,7 +723,7 @@ abstract 메소드, abstract 클래스 앞에 abstract 키워드를 붙여주지
 abstract 클래스를 상속한 자식 클래스가 concrete 클래스라면, concrete 자식 클래스는 상속 받은 abstract 메소드를 전부 재정의 해야한다. 그렇지 않으면 컴파일 에러가 발생한다.      
 abstract 클래스를 상속한 자식 클래스가 abstract 클래스라면, abstract 자식 클래스는 상속 받은 abstract 메소드를 전부 재정의 하지 않아도 되고 해도 된다.      
 
-###08-02 예제 코드
+### 08-02 예제 코드
 
 **다형성 호출 예제**    
 ~~~java
@@ -809,3 +809,150 @@ public class Abstract2{
     }
 }
 ~~~
+
+
+## 09 Collection
+### 09-01 Collection Framework
+1) Collection Framework 이란?
+
+**Class library**   
+자주 사용하는 클래스들을 컴파일해서 jar 파일로 묶어 놓은 것     
+java 표준 클래스 라이브러리 : JDK에 포함된 클래스 라이브러리
+
+**Framework**       
+프레임웍 클래스 라이브러리(framework class library) : 클래스 라이브러리 중에서 규모가 좀 크고, 클래스들의 구조가 간단하지 않을 것들, 간단히 줄여서 프레임 웤(framework)라고 부른다.     
+framework에서 중요한 점은, 클래스들이 서로 연결되고 실행되는 구조가 단순하지 않고 세련되었다는 점이다.      
+즉, 객체지향적으로 세련된 구조를 갖는 클래스 라이브러리를 프레임웍이라고 부른다.    
+
+**Collection Class**    
+내부에 자료 목록을 보관하기 위한 클래스를 컬렉션 클래스라고 부른다. 
+컬랙션 클래스에 보관할 수 있는 자료는 참조형이어야 한다.(기본 자료형은 컬랙션 클래스에 보관할 수 없다. 기본 자료형을 컬랙션에 보관할 때는, 자동으로 참조형으로 변환되어 보관된다.(auto-boxing))    
+
+* Collection Framework   
+Java 표준 라이브러리에 포함된 컬랙션 클래스들의 수가 많고, 그 구조가 간단하지 않기 때문이다.    
+
+2) Collection Framework 구성요소    
+1. interface    
+    컬렉션 클래스들을 서로 호환되는 몇 개의 그룹으로 나눌 수 있다.  
+    **implemetations**      
+    컬렉션 클래스 그룹에 속하는 클래스들은 그 그룹 대표 java interface를 구현(implements)해야한다.      
+    **Algorithms**      
+    collection class들을 대상으로 정렬(sorting), 탐색(searching) 등의 연산을 구현한 메소드들을 collection framework의 algorithms 라고 부른다. 이 알고리즘 메소드들을 다형성(polymorphism)을 활용하여 구현되었다.    
+3) Collection framework의 interface들
+![collection framework의 interface들](https://t1.daumcdn.net/cfile/tistory/9999973F5BD1AAD21C)    
+
+**Collection interface**    
+대다수의 자바 컬렉션 클래스를 대표하는 interface이다. 대다수의 자바 컬렉션 클래스들에 Collection interface의 메소드들이 구현되어 있다.      
+
+**Set interface**   
+수학에서 집합(set)은 값이 같은 항목을 여러개 포함할 수 없다.    
+
+**List interface**      
+List interface를 구현한 대표적인 클래스가 ArrayList이다. 배열과 비슷한 방법으로 사용할 수 있는 컬렉션 클래스들을 대표하는 것이 List interface이다.      
+
+**Queue interface**     
+Queue에 데이터를 넣고 꺼내는 방식은 FIFO(first in first out)이다.   
+
+**Deque interface**     
+양방향 큐, 양쪽에서 넣거나 꺼낼 수 있다. 그래서 큐처럼 FIFO방식으로 이용할 수도 있고, stack처럼 LIFO 방식으로 사용할 수도 있다.     
+
+**Map interface**   
+키(key)로 값(value)을 등록하거나 꺼내는 방식으로 사용하는 컬렉션 클래스들을 대표하는 인터페이스이다.    
+
+**SortedSet interface, SortedMap interface**   
+SortedSet, SortedMap은 각각 Set, Map의 자식 인터페이스이다. 그래서 각각 Set, Map에 정의된 메소드들을 상속받는다. SortedSet, SortedMap은 데이터를 정렬된 순서로 보관한다.    
+데이터가 정렬된 순서이기 때문에 가능한 메소드들이 SortedSet, SortedMap 인터페이스에 포함되어 있다.      
+
+### 09-02 Collection Interface
+java.util.Collection 인터페이스     
+자료 목록을 보관하는 용도의 클래스를 컬렉션 클래스라고 부른다.      
+java 표준 라이브러리에 들어있는 대부분의 컬렉션 클래스들(Map은 제외)은 Collection interface를 implements하였다.     
+
+1) Collection interface method      
+* boolean add(E e)      
+객체 e를 내부 목록에 추가한다. 추가 작업이 성공했으면 true를, 실패면 false를 리턴한다.    
+
+* boolean addAll(Collection<E> c)   
+목록 객체 c에 들어있는 항목들을 전부 내부 목록에 추가한다.  
+추가 작업이 성공했으면 true, 실패면 false를 리턴한다.   
+
+* void clear()      
+내부 목록에 들어 있는 항목 전체를 제거한다. 그 결과 내부 목록은 비어 있는 상태가 된다.      
+
+* boolean contains(Object o)
+파라미터 o와 동일한 값이 내부 목록에 들어있다면 true를 리턴한다.    
+
+* boolean containsAll(Collection<E> c)      
+컬렉션 객체 c에 들어있는 항목들이 전부 this 객체의 내부 목록에 들어있는지 확인한다. 전부 들어있다면 true를 리턴한다.    
+동일한 값이 있는지 찾을 때 equals 메소드를 호출해서 비교한다.   
+
+* boolean equals(Object o)
+객체 o와 this 객체의 equality를 비교한다.   
+즉, this 객체와 o 객체의 클래스가 같고, 목록 o에 들어있는 항목의 수가 그것과 동일하고, 양쪽 목록에 들어있는 항목들 각각이 서로 동일한 경우에 true를 리턴한다.   
+항목들이 각각이 서로 동일한지 비교할 때 equals 메소드를 호출해서 비교한다.  
+
+* int hashCode()    
+내부 객체 목록까지 고려하여 hash code 값을 계산해서 리턴한다.   
+
+* boolean isEmpty()     
+목록이 비어 있으면 true를 리턴한다.     
+
+* Iterator<E> iterator()     
+내부 목록에 들어있는 항목을 하나씩 탐색하기 위한 iterator 객체를 생성하여 리턴한다.     
+
+* boolean remove(Object o)  
+파라미터 o와 동일한 값(equals)을 목록에서 찾아서 제거한다. 파라미터 값이 null이면, null을 찾아서 제거한다.  
+제거에 성공했으면 true를, 실패면 false를 리턴한다.      
+
+* boolean removeAll(Collection c)   
+파라미터로 주어진 목록 객체 c에 들어있는 항목들을 this 객체에서 찾아서 전부 제거한다.   
+제거된 항목이 한 개 이상이면 true를 리턴한다.   
+
+* boolean retainAll(Collection c)   
+파라미터로 주어진 목록 객체 c에 들어있지 않은 항목들을 this 객체에서 찾아서 전부 제거한다.   
+그래서 c에 들어있는 항목들만 this 객체에 남아있게 된다.     
+제거된 항목이 한 개 이상이면 true를 리턴한다.   
+
+* int size()    
+내부 목록에 들어있는 항목의 수를 리턴한다.      
+
+* Object[] toArray()
+목록 객체에 들어있는 항목들을 배열에 채워서 리턴한다. 리턴되는 배열의 타입은 Objectp[]이다.     
+
+* E[] toArray(E[] a)    
+목록 객체에 들어있는 항목들을 배열에 채워서 리턴한다.   
+리턴되는 배열의 타입은 파라미터로 주어진 배열의 타입과 같다.    
+
+### 09-03 Collection 예제   
+```java
+Collection<String> c = new ArrayList<String>();```  
+ArrayList 클래스는 Collection 인터페이스를 구현(implements) 하였다.     
+따라서 Collection 인터페이스가 ArrayList 클래스의 부모 타입이다.
+
+```java
+c.add("one");
+c.add("two");
+c.add("three");
+```
+**부모 타입의 변수로 메소드를 호출**해야 다형성 호출이다.   
+
+```java
+for(String s : c)
+    System.out.printf("%s",s);
+```
+배열뿐만아니라, Collection 인터페이스를 구현한 클래스 객체들도 위와 같은 for문으로 탐색할 수 있다.      
+
+```java
+Collection<String> c1 = new LinkedList<String>();
+```
+LinkedList 클래스도 Collection 인터페이스를 구현(implements) 하였다. 따라서 Collection 인터페이스가 LinkedList 클래스의 부모 타입이다. 자식 타입의 객체에 대한 참조를 부모 타입의 변수에 대입하는 것은 가능하다.    
+
+```java
+static void printCollection(Collection<String> c){
+    //
+    Object[] a = c.toArray();
+    String s = Arrays.toString(a);
+    // String s = c.toString();으로 하는게 더 간단함. (Collection 인터페이스에서 toString()이 재정의되어있음.) 
+    System.out.println(s);
+}
+```
