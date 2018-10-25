@@ -671,20 +671,141 @@ Random 클래스의 int nextInt(int n) 메소드는 0~n-1 정수 중의 하나�
 ## 08 다형성 구현   
 ###08-01 배경지식   
 
-**객체 지향 설계**      
+1) 객체 지향 설계    
 1. 상속
 메소드 재정의 (override) : 자식 클래스에서 기능을 수정, 공통 기능은 부모 클래스에 구현하여 재사용
 2. 다형성   
 자식 클래스들은 사용하는 용도가 비슷. 사용 방법이 호환되도록 만든 것이 다형성   
 
-**다형성을 구현하는 방법**
-사용용도가 비슷한 클래스들은    
-1. 다형성을 구현하려는 클래스들이 공통 부모 클래스를 상속(extends) 받거나, 아니면 공통 Interface를 구현(implements) 해야 한다. 
-2. 공통 부모 클래스를 상속 받은 자식 클래스들은 다형성을 구현하려는 부모 클래스의 메소드들을 재정의(override) 해야 한다.    
-공통 메소드가 부모 클래스에 선언이 되어있어야함. 자식 클래스에서 부모 클래스에 있는 그 메소드를 재정의(override)해야 함.
-3. 다형성 메소드를 호출할 때 객체 참조 변수는 **부모 타입**으로 호출해야 함.  공통 부모 클래스 타입의 변수나, 공통 interface 타입의 변수를 사용하여 메소드를 호출해야 다형성 호출이다. 자식 클래스 타입의 변수를 사용하여 메소드를 호출하면 언제나 그 자식 클래스를 호출하면 언제나 그 자식 클래스의 메소드가 호출될 것이기 때문에 다형성 호출이 아니다.  
+2) 다형성을 구현하는 방법
+사용용도가 비슷한 클래스들은 
 
-**인터페이스와 클래스의 차이점**
+    1. 다형성을 구현하려는 클래스들이 공통 부모 클래스를 상속(extends) 받거나, 아니면 공통 Interface를 구현(implements) 해야 한다.  
+    2. 공통 부모 클래스를 상속 받은 자식 클래스들은 다형성을 구현하려는 부모 클래스의 메소드들을 재정의(override) 해야 한다.    
+    공통 메소드가 부모 클래스에 선언이 되어있어야함. 자식 클래스에서 부모 클래스에 있는 그 메소드를 재정의(override)해야 함.    
+    3. 다형성 메소드를 호출할 때 객체 참조 변수는 **부모 타입**으로 호출해야 함.  공통 부모 클래스 타입의 변수나, 공통 interface 타입의 변수를 사용하여 메소드를 호출해야 다형성 호출이다. 자식 클래스 타입의 변수를 사용하여 메소드를 호출하면 언제나 그 자식 클래스를 호출하면 언제나 그 자식 클래스의 메소드가 호출될 것이기 때문에 다형성 호출이 아니다.  
+
+3) 인터페이스와 클래스의 차이점     
 * 클래스: 메소드 상속&다형성      
-* 인터페이스: 호환, 다형성
+* 인터페이스: 다형성 구현만을 위해 있음. 상속은 하지못한다.     
 
+4) interface    
+* java 언어의 interface는 메소드 구현 없이 메소드 선언만 포함해야 한다. 그리고 멤버 변수도 없어야 한다.     
+* 사용방법이 같고 서로 호환이 되는 클래스들을 여러 개 만들어야 할 때, interface를 활용한다.     
+    1. 미리 그 사용 방법(public method 목록)을 interface로 정의한다.        
+    2. 그 interface에 정의된 public method를 구현(implements)하는 형태로 클래스들을 구현한다.   
+
+* public abstract 메소드    
+    인터페이스는 모든 메소드가 자동적으로 public abstract 메소드    
+    생략해더라도 인터페이스의 메소드는 모두 public abstract 메소드이다.
+
+* public static 메소드
+    인터페이스의 멤버 변수는 모두 public static final 멤버변수이다.     
+    public static final 키워드를 멤버 변수 앞에 붙여주어도 되고 생략해도 된다.      
+    생략하더라도 인터페이스의 멤버 변수는 모두 public static final 멤버 변수이다.   
+
+5) 메소드 재정의       
+부모 클래스 메소드를 자식 클래스에서 다시 구현하는 것을 메소드 재정의(override)라고 부른다.     
+* 메소드명이 정확하게 일치해야한다.     
+* 파라미터의 수가 정확하게 일치해야 한다.   
+* 파라미터의 타입이 정확하게 일치해야 한다. 
+* 리턴 타입이 일치해야 한다.    
+* 자식 메소드의 리턴 타입이 부모 메소드의 리턴 타입의 자식 클래스이어도 된다.   
+* 파라미터 변수 명은 일치하지 않아도 된다.  
+
+6) @Override 어노테이션
+재정의 메소드의 @Override 어노테이션을 붙이면, 부모 클래스의 메소드를 정확하게 재정의 했는지 컴파일러가 검사해준다.     
+
+7) abstract method & abstract class     
+abstract 클래스의 인스턴스 객체를 생성할 수 없다.   
+오직 concrete 클래스의 인스턴스 객체만 생성할 수 있다.      
+abstract 메소드, abstract 클래스 앞에 abstract 키워드를 붙여주지 않으면 컴파일 에러가 발생한다.     
+abstract 클래스를 상속한 자식 클래스가 concrete 클래스라면, concrete 자식 클래스는 상속 받은 abstract 메소드를 전부 재정의 해야한다. 그렇지 않으면 컴파일 에러가 발생한다.      
+abstract 클래스를 상속한 자식 클래스가 abstract 클래스라면, abstract 자식 클래스는 상속 받은 abstract 메소드를 전부 재정의 하지 않아도 되고 해도 된다.      
+
+###08-02 예제 코드
+
+**다형성 호출 예제**    
+~~~java
+class Parent{
+    public void method1(){
+        ...
+    }
+}
+
+class ChildOne extends Parent{
+    @Override
+    public void method1(){
+        ...
+    }
+}
+class ChildTwo extends Parent{
+    @Override
+    public void method1(){
+        ...
+    }
+}
+class ChildThree extends Parent{
+}
+
+public class Polymorphism1{
+    public static void main(String[] args){
+        Parent parent;
+        ChildOne obj1 = new ChildOne();
+        ChildTwo obj2 = new ChildTwo();
+        ChildThree obj3 = new ChildThree();
+
+        obj1.method1(); // 다형성 호출이 아님.
+
+        parent = obj1;
+        parent.method1(); // 다형성 호출
+    }
+}
+
+public class Polymorphism2{
+    static void doSomething(Parent parent){
+        parent.method1();
+    }
+    public static void main(String[] args){
+        Parent parent;
+        ChildOne obj1 = new ChildOne();
+        ChildTwo obj2 = new ChildTwo();
+        ChildThree obj3 = new ChildThree();
+
+        obj1.method1(); // 다형성 호출이 아님.
+
+        doSomething(obj1); // 다형성 호출
+    }
+}
+~~~
+
+**abstract 클래스 예제**    
+~~~java
+abstract class Parent{
+    public static final double PI=3.141592;
+
+    public abstract void method1();
+    publuc abstract void method2();
+}
+
+class ChildOne extends Parent{
+    @Override
+    public void method1(){
+        System.out.println("ChildOne method1()");
+    }
+    @Override
+    public void method2(){
+        System.out.println("ChildOne method2()");
+    }
+}
+public class Abstract2{
+    static void doSomething(Parent parent){ //다형성 호출
+        parent.method1();
+        parent.method2();
+    }
+    public static void main(String[] args){
+        ChildOne obj1 = new ChildOne();
+        doSomething(obj1);
+    }
+}
+~~~
