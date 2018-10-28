@@ -1105,3 +1105,84 @@ public class OutterClass extends JFrame{
     button.addActionLister(e->JOptionPane.showMessageDialog(OutterClass.this,message)); //lambda expression에서 메소드 본문이 간단한 메소드 호출 뿐이라면, 중괄호와 세미콜론을 생략할 수 있다.
 }
 ~~~
+
+## 11 Thread    
+### 11-01 스레드(thread)
+1) 스레드란?        
+java 컴파일러는 java 소스 코드를 바이트코드(bytecode)로 컴파일한다.     
+CPU가 바이트 코드를 하나씩 순서대로 실행하고 있는 것을, 그 실행 흐름을 스레드(thread)라고 부른다.       
+
+2) 멀티 스레드(multi thread)        
+요즘 CPU는 멀티 코어 형태이기 때문에, 각각의 코어가 독립적으로 바이트 코드를 실행할 수 있다. 즉, 여러개의 스레드가 동시에 실행될 수 있다.   
+
+3) 실행 흐름 생성   
+Thread 클래스의 start 메소드를 호출하면 새 실행 흐름이 생성된다. Thread 객체를 생성하는 것은 객체만 생성할 뿐이고, 새 실행 흐름이 생성되는 것은 아니다. start 메소드를 호출할 때 새 실행 흐름이 생성된다.   
+
+### 11-02 스레드 생성   
+**구현 방법 1**      
+**Thread 클래스를 상속(extends)**하여 자식 클래스 ChildThread 클래스를 구현한다.         
+ChildThread 클래스에서 **run 메소드를 재정의**한다.     
+ChildThread 클래스의 객체를 생성한다.   
+ChildThread 객체의 **start 메소드를 호출하면 새 실행 흐름이 생성되어 ChildThread 객체의 run 메소드를 실행**하게 된다.   
+메인 스레드는 start 메소드 아래로 실행을 계속한다.      
+
+**구현 방법 2**      
+**Runnable 인터페이스를 구현(implements)**한 ChildRunnable 클래스를 구현한다.   
+ChildRunnable 클래스에서 **run 메소드를 재정의**한다.   
+ChildRunnable 클래스 객체를 생성한다.   
+**ChildRunnable 객체를 파라미터로 Thread 객체를 생성**한다.     
+**Thread 객체의 start 메소드를 호출**하면 새 실행 흐름이 생성되어 ChildRunnable 객체의 run 메소드를 실행하게 된다.  
+메인 스레드는 start 메소드 아래로 실행을 계속한다.  
+
+### 11-03 스레드 종료 시점
+**Thread 클래스의 join 메소드**     
+메인 스레드가 스레드 객체의 join 메소드를 호출하면, 그 스레드가 실행흐름이 run 메소드를 리턴하여 종료될 때까지 main 메소드는 대기하다가 리턴한다.   
+~~~java
+threadOne.start();
+threadTwo.start();
+threadThree.start();
+try{
+    threadOne.join();
+    hreadOne.join();
+    threadOne.join();
+} catch(InterruptedException e){
+    System.out.println("interrupted");
+}
+~~~
+
+### 11-04 공유 변수
+
+~~~java
+class MyThread extends Thread{
+    static int sum = 0;
+
+    @Override
+    public void run(){
+        try{
+            for(int i=1;i<=count;++i){
+                synchronized(MyThread.class){ 
+                    sum += i;
+                }
+                // 여러 스레드가 공유하는 변수(여기서는 static int sum;)를 읽고 쓸때는 락이 필요하다.
+                // sum 변수가 MyThread 클래스의 클래스 변수이기 때문에 위 코드로 락을 걸면 된다. 락이 걸리면 다른 스레드는 그 부분을 실행할 수 없기 때문에 안정하다.
+                // 클래스 멤버 변수는 인스턴스 객체에 들어있지 않고, 그 클래스 객체에 들어있다. 즉, MyThread.class 객체에 들어있다고 보면 된다.
+                int mili_second = random.nextInt(10);
+                sleep(mili_second);
+            }
+        }catch(InterruptedException e){
+            System.out.println("interrupted");
+        }
+    }
+}
+~~~
+
+### 11-05 공유 객체
+~~~java
+class SharedObj{
+    int sum = 0;
+
+    synchronized void add(int i){
+        sum += i;
+    }
+}
+~~~
