@@ -956,3 +956,152 @@ static void printCollection(Collection<String> c){
     System.out.println(s);
 }
 ```
+
+## 10 inner class와 lambda expression   
+java 8  
+1) lambda Expression    
+2) stream API class 
+=> 함수형 프로그래밍이 가능하도록함! 
+-> 복잡한 데이터 처리. 병렬 처리를 구현할 때    
+(빅데이터 분야, GUI에서 리스너를 구현할 때)     
+
+### 10-01 inner class
+1) inner class      
+**inner class 객체를 생성할 때, outer class 객체에 대한 this가 inner class 객체에 자동으로 전달된다.**    
+그래서 inner class의 메소드에서 outer class 객체에 대한 this를 사용할 수 있다.      
+outter class 객체에 대한 this가 있는 곳에서만 (instance method), inner class 객체를 생성할 수 있다.
+
+```java
+public class OutterClass1{
+    int a;
+    class InnerClass{
+        int b;
+        void method2(){
+            // inner class 메소드에서 this는 inner class를 가르킨다.
+            b = 5;
+            this.b = 6;
+            
+            // inner class method에서 outter class 객체에 대한 this를 사용할 수 있다.
+            // 멤버 변수
+            a = 7;
+            OutterClass1.this.a = 8;
+            // 멤버 메소드
+            instanceMethod();
+            OutterClass1.this.instanceMethod();
+            // this.instanceMethod();          컴파일 에러 
+            // inner class에 instranceMethod() 메소드가 없으므로 위 코드는 컴파일 에러가 발생한다.
+            main(null);
+        }
+    }
+
+    public void instanceMethod(){
+        InnerClass obj = new InnerClass();
+        a = 1;
+        this.a = 2;
+        obj.method2();
+    }
+
+    public static void main(String[] args){
+        OutterClass o = new OutterClass();
+        o.instanceMethod();
+        // InnerClass o = new InnerClass(); 컵파일 에러
+        // a = 3;                           컴파일 에러
+        // this.a = 4;                      컴파일 에러
+        // **메인 메소드는 static 메소드이기때문에 this를 사용할 수 없고 inner class를 생성할 수 없다.**
+    }
+}
+```
+
+**inner class의 객체생성을 할 수 있는 곳은 outter class의 instance method에서만 가능하다.**
+
+### 10-02 static inner class    
+1) static inner class   
+outter class 객체에 대한 this가 없는 곳에서도 (**static method**) inner class 객체를 생성할 수 있다.        
+
+### 10-03 anonymous inner class
+1) 예제 #1      
+~~~java 
+class MyActionListener implements ActionListener{
+    OutterClass3 window;
+
+    public MyActionLister(OutterClass3 window){
+        this.window=window;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        JOptionPane.showMessageDialog(window,window.message);
+    }
+}
+~~~
+
+~~~java
+ActionListener listener = new MyActionListener(this);
+button.addActionLister(listener);
+~~~
+
+2) 예제 #2      
+~~~java
+public class OutterClass extends JFrame{
+    ...
+    ActionListener listener = new MyActionListener(this);
+    button.addActionLister(listener);
+
+    class MyActionListener implements ActionListener{
+        @Overrride
+        public void actionPerformed(ActionEvent e){
+            JOptionPane.showMessageDialog(OutterClass.this,message);
+        }
+    }
+}
+~~~
+
+3) 예제 #3      
+~~~java
+public class OutterClass extends JFrame{
+    ...
+    ActionListener listener = new ActionListener(){ //anonymous inner class => 자식 클래스 이름을 생략한다. 
+        @Overrride
+        public void actionPerformed(ActionEvent e){
+            JOptionPane.showMessageDialog(OutterClass.this,message);
+        }
+    }
+    /* 위 코드가 하는 일은 다음과 같다.
+    1. ActionListener 인터페이스를 구현(implemnents)한 자식 클래스를 만들었다. 이 자식 클래스의 이름은 없다(anonymous class)
+    2. 이 자식 클래스에서 actionPerformed 메소드를 재정의하였다.
+    3. 이 자식 클래스의 객체가 하나 생성되고,
+    4. 그 객체에 대한 참조가 listener 지역 변수에 대입된다.
+    */
+    button.addActionLister(listener);
+}
+~~~
+
+4) 예제 #4      
+~~~java
+public class OutterClass extends JFrame{
+    ...
+    /* 위 코드가 하는 일은 다음과 같다.
+    1. ActionListener 인터페이스를 구현(implemnents)한 자식 클래스를 만들었다. 이 자식 클래스의 이름은 없다(anonymous class)
+    2. 이 자식 클래스에서 actionPerformed 메소드를 재정의하였다.
+    3. 이 자식 클래스의 객체가 하나 생성되고,
+    4. 그 객체를 파라미터로 전달하면서, button.addActionListener(생성된 객체); 메소드가 호출된다.
+    */
+    button.addActionLister(new ActionListener(){ //anonymous inner class => 자식 클래스 이름을 생략한다. 
+        @Overrride  
+        public void actionPerformed(ActionEvent e){
+            JOptionPane.showMessageDialog(OutterClass.this,message);  
+        }
+    }); 
+    // button.addActionListener(객체);
+}
+~~~
+
+5) 예제 #5 #6      
+~~~java
+public class OutterClass extends JFrame{
+    ...
+    button.addActionLister(e->{JOptionPane.showMessageDialog(OutterClass.this,message);}); 
+    // button.addActionListener(객체);
+    button.addActionLister(e->JOptionPane.showMessageDialog(OutterClass.this,message)); //lambda expression에서 메소드 본문이 간단한 메소드 호출 뿐이라면, 중괄호와 세미콜론을 생략할 수 있다.
+}
+~~~
