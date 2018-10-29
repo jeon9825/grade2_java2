@@ -9,6 +9,7 @@ Q. Integer 클래스가 immutable인 이유는 무엇인가?
 [5 문자열 클래스](https://github.com/jeon9825/grade2_java2#05-문자열-클래스)     
 [6 Java 배열 정렬 기능](https://github.com/jeon9825/grade2_java2#06-java-배열-정렬-기능)    
 [7 Arrays 클래스](https://github.com/jeon9825/grade2_java2#07-arrays-클래스)
+[Iterator](https://elren.blog.me/221084341094)
 ___
 
 
@@ -81,7 +82,13 @@ System.out.println(s2+"\n"+s3); // hELLo\nh안녕o 출력
 
 * String[] split(String regex)  
     regex 정규식과 일치하는 부분을 기준으로 this 문자열을 쪼갠다. 그렇게 쪼개진 문자열 배열을 리턴한다.
-    예) ``
+    예)     
+    ```java
+    String a = "c:/data/student/lecture.docx";
+    String []  path = a.split("/");
+    System.out.println(Arrays.toString(path));
+    //출력 [c:, data, student, lecture.docx]
+    ```
 
 * boolean startsWith(String s)      
     this 문자열의 시작 부분이 문자열 s와 일치하면 true를 리턴한다.    
@@ -282,7 +289,7 @@ c = p; //컴파일 에러!!!!!! down-casting!!!!
 ~~~java
 Integer x = new Integer(3);
 Integer y = new Integer(3);
-System.out.println(a.equals(b)); // false 출력
+System.out.println(x.equals(y)); // true 출력!!!!
 ~~~
 
 2) Auto-boxing & Auto-unboxing  
