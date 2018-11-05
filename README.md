@@ -295,40 +295,39 @@ System.out.println(x.equals(y)); // true 출력!!!!
 2) Auto-boxing & Auto-unboxing  
 * Auto-boxing   
 
-`Object a1 = 3;`     
-`Object a2 = new Integer(3);`
-둘은 같은 코드   
-컴파일러가 윗 코드를 아래코드로 자동으로 생성 Autoboxing    
+    `Object a1 = 3;`     
+    `Object a2 = new Integer(3);`       
+    둘은 같은 코드   
+    컴파일러가 윗 코드를 아래코드로 자동으로 생성 Autoboxing    
 
 * Auto-unboxing
-
-~~~java
-Integer i1 = new Integer(3);
-int i2 = i1;    
-~~~
-`int i2 = i1.intValue();`   
+    ~~~java
+    Integer i1 = new Integer(3);
+    int i2 = i1;    
+    ~~~
+    `int i2 = i1.intValue();`   
 
 3) nullable integer     
-null 값이 가능한 int값을 java 변수에 대입하려면 기본 자료형이 int 변수를 사용할 수 없고 Integer 객체 참조 변수를 사용해야한다.  
+    null 값이 가능한 int값을 java 변수에 대입하려면 기본 자료형이 int 변수를 사용할 수 없고 Integer 객체 참조 변수를 사용해야한다.  
 
 ### 03-3 static member
 1) static member variable & static method   
 
 2) static 메소드의 제약         
-static method <-> instance method       
-**static 메소드는 this 키워드를 사용할 수 없고 instance 메소드는 this 키워드를 사용할 수 있다.**    
-static 메소드는 this가 아닌 다른 객체 인스턴스의 멤버 변수나 메소드는 사용할 수 있다.   
+    static method <-> instance method       
+    **static 메소드는 this 키워드를 사용할 수 없고 instance 메소드는 this 키워드를 사용할 수 있다.**    
+    tatic 메소드는 this가 아닌 다른 객체 인스턴스의 멤버 변수나 메소드는 사용할 수 있다.   
 
 3) static constructor (생성자)  
-main 메소드보다 먼저 호출된다.
-~~~java
-public class Person { 
-    static int staticVariable; 
-    static { 
-        staticVariable = 0;
+    main 메소드보다 먼저 호출된다.
+```java
+    public class Person { 
+        static int staticVariable; 
+        static { 
+            staticVariable = 0;
+        }
     }
-}
-~~~
+```
 
 ~~~java
 public class Person { 
