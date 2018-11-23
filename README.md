@@ -1192,3 +1192,44 @@ class SharedObj{
     }
 }
 ~~~
+
+## 12 List 인터페이스
+
+### 12-01 List interface 메소드     
+**Collection 인터페이스로부터 상속받은 메소드**     
+
+* boolean add(E e)
+* boolean addAll(Collection<E> c)
+* void clear()
+* boolean contains(Object o)
+* boolean containsAll(Collection<E> c)
+* boolean equals(Object o)
+* int hashCode()
+* boolean isEmpty()
+* Iterator<E> iterator()
+* boolean remove(Object o)
+* boolean removeAll(Collection<E> c)
+* boolean retainAll(Collection<E> c)
+* int size()
+* Object[] toArray()
+* E[] toArray(E[] a)
+
+**List interface에 선언된 메소드**      
+* void add(int index, E e)
+    객체 e를 내부 목록의 index 위치에 끼워 넣는다.      
+* boolean addAll(int index, Collection<E> c)    
+    목록 객체 c에 들어있는 항목들을 전부 내부 목록의 index 위치에 끼워 넣는다. 추가 작업이 성공했으면 true를, 실패면 false를 리턴한다.      
+* E get(int index)      
+    내부 목록에서 index 위치의 객체를 리턴한다.
+* int indexOf(Object o)
+    내부 목록에서 객체 o를 찾아서 위치를, 즉 index 값을 리턴한다. 찾지 못할 경우 -1을 리턴한다.     
+* ListIterator<E> listIterator()    
+    내부 목록에 들어있는 항목을 하나씩 탐색하기 위한 ListIterator 객체를 생성하여 리턴한다.     
+* E remove(int index)   
+    내부 목록에서 index 위치의 객체를 제거한다. 리턴 값은 제거된 객체이다.      
+* void set(int index, E e)  
+    내부 목록에서 index 위치에 객체 e를 대입한다. index 위치의 기존의 값을 덮어쓴다.    
+* List<E> subList(int fromIndex, int toIndex)   
+    내부 목록에서fromIndex부터 시작해서, toIndex 직전까지의 항목을 포함하는 새 List 객체를 생성하여 리턴한다.
+
+### 11-02 List 인터페이스를 구현한 클래스
