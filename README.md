@@ -1232,4 +1232,106 @@ class SharedObj{
 * List<E> subList(int fromIndex, int toIndex)   
     내부 목록에서fromIndex부터 시작해서, toIndex 직전까지의 항목을 포함하는 새 List 객체를 생성하여 리턴한다.
 
-### 11-02 List 인터페이스를 구현한 클래스
+**List 인터페이스를 구현한 클래스**  
+1. ArrayList 클래스 : 배열 형태의 자료구조
+2. LinkedList 클래스 : 링크드 리스트 형태의 자료구조
+3. Vector 클래스 : 배열 형태의 자료구조 + synchronized object   
+
+* synchronized object   
+여러 스레드(thread)가 객체 하나를 공유하며 동시에 공유 객체의 메소드를 호출해도 문제가 발생하지 않도록 구현한 객체      
+- 스레드가 객체의 메소드를 실행하기 직전에 객체를 잠근다. (lock)
+- 스레드가 메소드에서 리턴하기 직전에 잠금을 해제한다. (unlock)
+
+### 12-02 List 예제
+```cpp
+List<String> list = new ArrayList<String>();
+list.add("one");
+list.add("three");
+list.add(0, "zero");
+list.add(2, "two");
+//zero one two three
+```
+```cpp
+List<String> list1 = new ArrayList<String>();
+List<String> list2 = new LinkedList<String>();
+
+list1.add("one");
+list1.add("two");
+list2.add("zero");
+list2.add("three");
+list2.addAll(1,list1);
+//list2는 zero one two three
+```
+```cpp
+List<String> list = new ArrayList<String>();
+list.add("one");
+list.add("three");
+list.add(0,"zero");
+list.add(2,"two");
+
+for(int i = 0 ; i < list.size() ; ++i)
+    System.out.printf("%s ", list.get(i));
+```
+```cpp
+List<String> list = new ArrayList<String>();
+list.add("zero");
+list.add("one");
+System.out.println(list.indexOf("one")); 
+//1
+```
+```cpp
+List<String> list = new ArrayList<String>();
+
+list.add("zero");
+list.add("one");
+list.add("two");
+list.add("three");
+
+list.remove("two");
+//zero one three
+```
+```cpp
+List<String> list = new ArrayList<String>();
+
+list.add("zero");
+list.add("one");
+list.add("two");
+list.add("three");
+
+list.remove(2, "TWO");
+//zero one TWO three
+```
+```cpp
+List<String> list = new ArrayList<String>();
+
+list.add("zero");
+list.add("one");
+list.add("two");
+list.add("three");
+
+List<String> list2 = list.subList(1, 3); //one two
+```
+
+### 12-03 다형성 활용
+인터페이스를 만드는 이유: 다형성을 활용하기 위해서      
+예)     
+int getSum(ArrayList<Integer> list)     
+int getSum(LinkedList<Integer> list) 이 두 메소드를 둘 다 구현하는 것은 낭비
+
+int getSum(List<Integer> list) 이 메소드만 구현하자.
+
+**파라미터 변수 타입을 부모 클래스나 부모 인터페이스 타입으로 선언하여 다형성을 활용하자**
+
+## 13 Map
+### 13-01 Map 인터페이스 
+List의 특징 : index (0, 1, 2, 3 ...)   
+Map의 특징 : KEY 값! key는 hashCode() 메소드를 재정의한 클래스이어야 한다.
+* data 클래스(예) Integer, Doble, Date, String ... 는 hashCode() 메소드가 재정의 되어있음.
+
+**Map interface**
+데이터 항목 한 개는 key와 value로 구성된다. 
+데이터 항목을 등록할 때는, key와 value를 같이 등록한다. 
+데이터 항목을 꺼낼 때는, key로 찾아서 value를 리턴한다.
+
+1) Map<K,V> interface   
+ejf
