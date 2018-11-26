@@ -1324,14 +1324,56 @@ int getSum(List<Integer> list) 이 메소드만 구현하자.
 
 ## 13 Map
 ### 13-01 Map 인터페이스 
-List의 특징 : index (0, 1, 2, 3 ...)   
-Map의 특징 : KEY 값! key는 hashCode() 메소드를 재정의한 클래스이어야 한다.
-* data 클래스(예) Integer, Doble, Date, String ... 는 hashCode() 메소드가 재정의 되어있음.
+List의 특징 : index (0, 1, 2, 3 ...)        
+Map의 특징 : KEY 값! key는 hashCode() 메소드를 재정의한 클래스이어야 한다.      
+* data 클래스(예) Integer, Doble, Date, String ... 는 hashCode() 메소드가 재정의 되어있음.      
 
-**Map interface**
-데이터 항목 한 개는 key와 value로 구성된다. 
-데이터 항목을 등록할 때는, key와 value를 같이 등록한다. 
-데이터 항목을 꺼낼 때는, key로 찾아서 value를 리턴한다.
+**Map interface**       
+데이터 항목 한 개는 key와 value로 구성된다.         
+데이터 항목을 등록할 때는, key와 value를 같이 등록한다.         
+데이터 항목을 꺼낼 때는, key로 찾아서 value를 리턴한다.     
 
 1) Map<K,V> interface   
-ejf
+Map 인터페이스를 사용할 때, Map<K,V> 형태로 사용한다.   
+여기서 K, V 부분에 각각 실제 클래스 타입을 지정해야 한다.
+K는 key의 타입이고, V는 value의 타입이다.       
+
+**객체 생성의 예**      
+```java
+Map<String,Person> map = new HashMap<String,Person>();
+```
+key 타입은 String 객체이고, value는 Person 객체이다.        
+
+### 13-02 Map 인터페이스를 구현한 클래스    
+**HashMap 클래스**      
+해시 테이블 알고리즘으로 구현된 클래스      
+해시 테이블 알고리즘의 성능
+평균 : O(1)
+최악의 경우 : O(n)      
+
+**TreeMap 클래스**          
+Red Black Tree 알고리즘으로 구현된 클래스       
+Red Black Tree 알고리즘의 성능
+평균 : O(log n)
+최악의 경우 : O(log n)      
+**TreeMap 클래스는 SortMap 인터페이스를 구현하였다. 등록된 데이터 항목들이 key 순서대로 정렬된다. (Red Black Tree도 Binary Tree 이다.)**        
+
+## 13-03 Map<K,V> interface 메소드 :star:
+* void clear()      
+    내부 목록에 들어있는 항목 전체를 제거한다. 그 결과 내부 목록은 비어 있는 상태가 된다.   
+* boolean containsKey(Object k)     
+    등록된 key 목록 중에서 k가 포함되어 있으면 true, 없으면 false를 리턴한다.       
+* boolean containsValue(Object v)       
+    등록된 value 목록 중에서 v가 포함되어 있으면 true, 없으면 false를 리턴한다.     
+* Set<Map.Entry<K,V>> entrySet()    
+    등록되 데이터 항목들의 목록을 Set 컬렉션 타입으로 리턴한다.     
+    key의 타입은 K고, value의 타입은 V이고, 리턴되는 데이터 항목의 타입은 Set<Map.Entry<K,V>>타입이다.      
+* V get(Object k)
+    (key: k)로 등록했던 value를 리턴한다.       
+* boolean isEmpty()
+    등록된 데이터가 0개면 true를 리턴한다.      
+* Set<V> keySet()   
+    등록된 key 목록을 Set 타입으로 리턴한다.    
+* V put(K k, V v)   
+    (key : k, value : v) 등록한다.
+    (key : k)로 이미 등록되어 있던 value가 있다면 
