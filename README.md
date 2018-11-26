@@ -1344,7 +1344,7 @@ Map<String,Person> map = new HashMap<String,Person>();
 ```
 key 타입은 String 객체이고, value는 Person 객체이다.        
 
-### 13-02 Map 인터페이스를 구현한 클래스    
+**Map 인터페이스를 구현한 클래스**    
 **HashMap 클래스**      
 해시 테이블 알고리즘으로 구현된 클래스      
 해시 테이블 알고리즘의 성능
@@ -1358,7 +1358,7 @@ Red Black Tree 알고리즘의 성능
 최악의 경우 : O(log n)      
 **TreeMap 클래스는 SortMap 인터페이스를 구현하였다. 등록된 데이터 항목들이 key 순서대로 정렬된다. (Red Black Tree도 Binary Tree 이다.)**        
 
-## 13-03 Map<K,V> interface 메소드 :star:
+**Map<K,V> interface 메소드:star:**        
 * void clear()      
     내부 목록에 들어있는 항목 전체를 제거한다. 그 결과 내부 목록은 비어 있는 상태가 된다.   
 * boolean containsKey(Object k)     
@@ -1376,4 +1376,39 @@ Red Black Tree 알고리즘의 성능
     등록된 key 목록을 Set 타입으로 리턴한다.    
 * V put(K k, V v)   
     (key : k, value : v) 등록한다.
-    (key : k)로 이미 등록되어 있던 value가 있다면 
+    (key : k)로 이미 등록되어 있던 value가 있다면, v로 치환된다.        
+    리턴 값은 (key: k)로 이미 등록되어 있던 value이다. 등록되어 있던 value가 없을 경우 null을 리턴한다.         
+* void putAll(Map map)      
+    map에 등록되어 있는 데이터 항목들을 전부 this에 등록한다.       
+* V remove(K k)
+    (key : k)로 등록되어 있던 데이터를 제거한다.    
+    리턴 값은 (key: k)로 이미 등록되어 있던 value이다.      
+    등록되어 있던 value가 없을 경우 null을 리턴한다.        
+* int size()        
+    등록된 데이터 항목의 수를 리턴한다.     
+* Collection<V> values()    
+    등록된 value 목록을 Collection 타입으로 리턴한다.       
+
+
+예제)   
+```java
+Map<String, Integer> map = new HashMap<>();
+map.put("a",101);
+map.put("b",102);
+map.put("c",103);
+System.out.printf("%d %d %d", map.get("a"), map.get("b"),map.get("c"));
+// 101 102 103 출력
+
+map.remove(102);
+System.out.printf("%d %d %d", map.get("a"), map.get("b"),map.get("c"));
+// 101 null 103 출력
+
+```
+
+### 13-02 equals(), hashCode() 메소드 재정의
+1) equals, hashCode 메소드를 재정의 해야 함.    
+HashMap 클래스는 해시 테이블 알고리즘으로 구현되었다.   
+해시 테이블 알고리즘에서 저장할 데이터의 hash 값을 계산할 때, hashCode 메소드를 사용한다.
+HashMap key의 타입인 K는 equals, hashCode 메소드를 재정의 해야한다.     
+
+2) Object 클래스의 equals, hashCode 메소드의 문제점     
