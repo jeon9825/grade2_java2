@@ -1412,3 +1412,63 @@ HashMap 클래스는 해시 테이블 알고리즘으로 구현되었다.
 HashMap key의 타입인 K는 equals, hashCode 메소드를 재정의 해야한다.     
 
 2) Object 클래스의 equals, hashCode 메소드의 문제점     
+hashCode 메소드와 equals 메소드는 Object 클래스에 정의되어 있기 때문에 모든 Java 클래스에 상속된다.             
+equals 메소드는 객체의 내용이 동일한지 비교해야 하는데(equality 비교) Object 클래스에 구현된 equals 메소드는 identity를 비교한다.           
+hashCode 메소드는 객체의 내용을 가지고 계산해야 하는데 Object 클래스에 구현된 hashCode 메소드는 identity를 가지고 계산한다.     
+3) Object 클래스
+**hashCode 메소드 재정의**      
+```java
+@Override
+public int hashCode(){
+    return Objects.hash(name,age,Arrays.hashCode(a));
+}
+// return Objects.hash(...);
+// ... 부분에 모든 멤버 변수를 나열하면 된다.
+```
+
+**equals 메소드 재정의**        
+```java
+@Override
+public boolean equals(Object obj){
+    if (this==obj) return true;
+    if (obj instanceof Person == false) return false;
+    Person p = (Person) obj;
+    return this.age==p.age && Objects.equals(this.name, p.name);
+    // return 문에서 모든 멤버 변수를 비교 해야한다.
+    // 기본 자료형은 this.age==p.age 형태로 비교
+    // 참조형은 Objects.equals() 형태로 비교하면 된다.
+}
+```
+
+#### 목록 출력 예제
+```java
+Map<String, Integer> map = new HashMap<>();
+map.put("a", 101);
+map.put("b", 102);
+map.put("c", 103);
+
+for(String key : map.keySet()) //탐색
+    System.out.printf("(%s, %d)", key, map.get(key));
+
+for(Map.Entry<String,Integer> entry : map.entrySet())
+    System.out.printf("%s, %d", entry.getKey(), entry.getValue());
+```
+
+## 14 Regular Expression (정규식)
+### 14-01 정규식
+* [] 특수문자       
+    괄호 안의 문자들 중에서 아무 것이나 한 문자와 일치하는지 비교한다.      
+    예) `[tT]he` the The        
+    예) `9[123]` 91 92 93       
+    예) `[a-zA-Z]` 알파벳 한문자        
+* . 특수문자    
+    아무 문자 한 개와 일치한다.
+    예) `A.B` AzB A@B
+* [^ ] 특수문자
+    괄호 안의 문자들을 제외한 다른 문자들 중에서 아무 것이나 일치하는지 비교한다.
+    예) `[^tT]he` 일치하지 않는 문자열 : the The
+* ? 특수문자
+    ? 특수 문자 바로 앞의 정규식과 일치하는 문자 0~1개 있는지 비교한다. 
+    예) `AB?C`
+### 14-02 String 클래스의 정규식 메소드
+### 14-03 Pattern, Matcher 클래스
