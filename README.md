@@ -1469,6 +1469,122 @@ for(Map.Entry<String,Integer> entry : map.entrySet())
     예) `[^tT]he` 일치하지 않는 문자열 : the The
 * ? 특수문자
     ? 특수 문자 바로 앞의 정규식과 일치하는 문자 0~1개 있는지 비교한다. 
-    예) `AB?C`
-### 14-02 String 클래스의 정규식 메소드
+    예) `AB?C` AC ABC       
+* \* 특수문자     
+    \* 특수문자 바로 앞의 정규식과 일치하는 문자가 0~여러 개 있는지 비교한다.     
+    예) `AB*C` AC ABC ABBC ABBBC ...        
+* \+ 특수문자
+    \+ 특수 문자 바로 앞의 정규식과 일치하는 문자 1~여러 개가 있는지 비교한다.      
+    예) `AB+C` ABC ABBC ABBBC ...       
+* ^ 특수문자    
+    ^ 특수 문자는 줄바꿈 문자로 구분되는 각 줄의 선두 부분에서 있는 문자열인지 검사한다.        
+    예) `^123`
+* $ 특수문자    
+    $ 특수 문자는 줄바꿈 문자로 구분되는 각 줄의 끝 부분에서 있는 문자열인지 검사한다.      
+    예) `123$`      
+* {n} 특수문자  
+    { } 괄호 안에는 숫자가 1개 들어있어야 한다. { } 괄호 앞의 정규식과 일치하는 문자가 반복되는 수 == { }괄호 안의 숫자     
+    예) `AB{3}C` ABBBC      
+* {n,m} 특수문자
+    { } 괄호 안에는 숫자가 2개 들어있어야 한다. n <= { } 괄호 바로 앞의 정규식과 일치하는 문자가 반복되는 수 <= m       
+    예) `AB{2,3}C` ABBC ABBBC
+* () 특수 문자
+    ( ) 괄호 안의 정규식을 묶는 역할을 한다.    
+    예) `A(BC){2,3}D` ABCBCD ABCBCBCD       
+* | 특수문자    
+    | 특수 문자 앞 뒤의 정규식 둘 중의 하나와 문자열이 일치해야 한다.       
+    예) `Ab|cD`==`A[bc]D`       
+* \ 특수문자        
+    정규식 특수문자를 보통의 문자처럼 비교할 때, 특수문자앞에 \ 문자를 붙인다.      
+    예) `Ab\?D` Ab?D        
+
+
+### 14-02 String 클래스의 정규식 메소드 
+1) String 클래스의 match 메소드
+```java
+boolean matches(String regex)
+// this 문자열이 정규식 regex에 일치하는지 검사하여 true/false를 리턴
+```
+```java
+String [] a = new String []{
+    "010-323-1232", "02-545-3323", "010-9320-4124"
+}
+String regex "0(2|[1-9]{2})-[0-9]{3}-[0-9]{4}" ;
+for(String s : a){
+    if(s.matches(regex))
+        System.out.prinf("\"%s\" matches \"%s\"\n",s,regex);
+}
+```
+
+2) String 클래스의 replaceAll, replaceFirst 메소드      
+`String replaceAll(String regex, String replacement)`       
+this 문자열에서 정규식 regex와 일치하는 부분을 찾아서 전부 replacement로 치환한 새 문자열을 리턴. (새 문자열을 생성해서 리턴할 뿐 this 문자열은 변경되지 않는다.)       
+
+`String replaceFirst(String regex, String replacement)`     
+첫부분만 replacement로 치환     
+
+3) String 클래스의 split 메소드     
+`String[] split(String regex)`      
+this 문자열에서 regex 정규식과 일치하는 부분을 기준으로 문자열을 잘라서 문자열 배열을 만들어 리턴한다. (this 문자열은 변경되지않는다.)      
+```java
+String s = "one two, three,\t four: \t\nfive...six";
+String [] a = s.split("[ ,.;\t\n]+");
+System.out.println(Arrays.toString(a));
+// 출력결과 [one, two, three, four, five, six]
+```
 ### 14-03 Pattern, Matcher 클래스
+정규식 찾기& 바꾸기를 수행하기 위한 클래스들이 Pattern, Matcher 클래스      
+
+1) Pattern 객체 생성        
+```java
+Pattern p = Pattern.complie("정규식");
+// 정규식을 찾기위한 Pattern 객체를 생성한다.
+```
+
+2) Matcher 객체 생성
+```java
+Matcher m = p.matcher("비교할 문자열");
+// 비교할 문자열에서 정규식과 일치하는 부분을 찾기 위한 Matcher 객체를 생성한다.
+```
+
+3) 찾기
+```java
+m.find()
+// 비교할 문자열에서 정규식과 일치하는 부분을 찾는다. 찾았으면 true, 못찾았으면 false를 리턴한다.
+```
+
+**String의 matches 메소드와 Matcher의 find 메소드의 차이점**    
+String 클래스의 matches 메소드는 **입력 문자열 전체**가 정규식과 일치해야 true를 리턴한다.      
+Matcher 클래스의 find 메소드는 일치하는 부분이 입력 문자열에 포함되어 있으면 true를 리턴한다.       
+찾은 결과) `m.group(0)` 비교할 문자열에서 정규식과 일치하는 부분을 리턴한다.        
+
+**정규식과 일치하는 부분 찾기**         
+```java
+String s = "032-131-1312 010-5534-6574 02-242-3352 010-444-2234";
+String regex = "010-[0-9]{3,4}-[0-9]{4}";
+
+Pattern p = Pattern.compile(regex);
+Matcher m = p.matcher(s);
+
+if(m.find())
+    System.out.println(m.group(0));
+
+//계속 찾기
+while(m.find())
+    System.out.println(m.group(0));
+```
+**정규식의 일부와 일치하는 문자열**
+```java
+String s = "032-131-1312 010-5534-6574 02-242-3352 010-444-2234";
+String regex = "010-[0-9]{3,4}-[0-9]{4}";
+
+Pattern p = Pattern.compile(regex);
+Matcher m = p.matcher(s);
+
+if(m.find())
+    System.out.println(m.group(0));
+
+//계속 찾기
+while(m.find())
+    System.out.println(m.group(0));
+```
