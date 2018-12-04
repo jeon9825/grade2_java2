@@ -1525,7 +1525,7 @@ this 문자열에서 정규식 regex와 일치하는 부분을 찾아서 전부 
 
 3) String 클래스의 split 메소드     
 `String[] split(String regex)`      
-this 문자열에서 regex 정규식과 일치하는 부분을 기준으로 문자열을 잘라서 문자열 배열을 만들어 리턴한다. (this 문자열은 변경되지않는다.)      
+this 문자열에서 regex 정규식과 일치하는 부분을 기준으로 문자열을 잘라서 문자열 배열을 만들어 리턴s한다. (this 문자열은 변경되지않는다.)      
 ```java
 String s = "one two, three,\t four: \t\nfive...six";
 String [] a = s.split("[ ,.;\t\n]+");
@@ -1535,19 +1535,19 @@ System.out.println(Arrays.toString(a));
 ### 14-03 Pattern, Matcher 클래스
 정규식 찾기& 바꾸기를 수행하기 위한 클래스들이 Pattern, Matcher 클래스      
 
-1) Pattern 객체 생성        
+1) Pattern 객체 생성            
 ```java
 Pattern p = Pattern.complie("정규식");
 // 정규식을 찾기위한 Pattern 객체를 생성한다.
 ```
 
-2) Matcher 객체 생성
+2) Matcher 객체 생성        
 ```java
 Matcher m = p.matcher("비교할 문자열");
 // 비교할 문자열에서 정규식과 일치하는 부분을 찾기 위한 Matcher 객체를 생성한다.
 ```
 
-3) 찾기
+3) 찾기         
 ```java
 m.find()
 // 비교할 문자열에서 정규식과 일치하는 부분을 찾는다. 찾았으면 true, 못찾았으면 false를 리턴한다.
@@ -1576,7 +1576,7 @@ while(m.find())
 **정규식의 일부와 일치하는 문자열**
 ```java
 String s = "032-131-1312 010-5534-6574 02-242-3352 010-444-2234";
-String regex = "010-[0-9]{3,4}-[0-9]{4}";
+String regex = "010-([0-9]{3,4})-(?<b>[0-9]{4})";
 
 Pattern p = Pattern.compile(regex);
 Matcher m = p.matcher(s);
@@ -1587,4 +1587,84 @@ if(m.find())
 //계속 찾기
 while(m.find())
     System.out.println(m.group(0));
+    // Matcher의 group(0) 메소드는 정규식과 일치하는 부분 전체를 리턴한다.
+    System.out.println(m.group(1));
+    // Matcher의 group(1) 메소드는 정규식과 일치하는 부분 중에서 첫 번째 ( ) 괄호에 해당하는 부분을 리턴한다.
+    System.out.println(m.group("b"));
+    // (?<이름>정규식) group(String 이름) 메소드를 사용한다.
 ```
+
+## 15 Iterator  
+### 15-01 Iterator 인터페이스   
+1) Iterator 인터페이스 메소드
+* `boolean hasNext()` 
+    컬렉션에 아직 탐색할 데이터가 남아 있으면 true를 리턴한다.  
+    모든 데이터의 탐색을 완료하고 탐색이 끝났으면 false를 리턴한다.     
+* `E next()` 
+    다음 데이터 항목으로 현재 위치를 이동한 후, 그 데이터 항목을 리턴한다.      
+    이미 현재 위치가 목록의 끝이라서, 다음 데이터 항목이 없다면 예외(NoSuchElementException)가 발생한다.   
+* `void remove()`       
+    컬렉션에서 현재 위치의 데이터를 제거한다.       
+    직전의 next() 메소드 호출에서 리턴된 데이터가 제거된다.     
+
+2) Iterator 객체 생성       
+Collection 인터페이스를 구현(implements)한 클래스들은 모두 iterator 메소드를 구현했다.      
+`Iterator iterator()`   
+    현재 컬렉션 객체를 탐색하기 위한 이터레이터 객체가 생성되어 리턴된다.       
+    리턴된 이터레이터 객체의 현재 위치는, *아직 아무것도 가르키고 있지 않다.*       
+    이터레이터 객체를 생성한 후, **next() 메소드를 호출하면 목록에서 첫 데이터 항목을 가리킨다.**       
+
+```java
+Collection<Integer> c = new ArrayList<>();
+for(int i = 0 ; i < 10 ; ++i)
+    c.add(i);
+
+Iterator<Integer> iterator = c.iterator();
+while(iterator.hasNext()){
+    int i = iterator.next();
+    System.out.print(i+" ");
+    //짝수 제거 ==> 제거할 때 for-each문을 사용하면 에러가 발생한다.
+    if(i % 2 == 0) iterator.remove();
+}
+```
+
+### 15-02 ListIterator 인터페이스
+1) ListIterator 인터페이스 메소드
+* `void add(E e)`
+    현재 위치에 e를 끼워 넣는다.    
+    직전의 next() 메소드 호출로 리턴된 데이터 바로 뒤거나,     
+    직전의 previoud() 메소드 호출에서 리턴된 데이터의 바로 앞에 e가 삽입된다.       
+
+* `boolean hasNext()`   
+    순방향으로 컬렉션을 탐색 중일 때, 컬렉션에 아직 탐색할 데이터가 남아 있으면 true를 리턴한다.    
+    즉, 현재 위치의 뒤에 데이터 항목이 있으면 true를 리턴하고 없으면 false를 리턴한다.      
+
+* `boolean hasPrevious()`   
+    역방향으로 컬렉션을 탐색 중일 때, 컬렉션에 아직 탐색할 데이터가 남아 있으면 true를 리턴한다.        
+
+* `E next()`    
+    다음 데이터 항목으로 현재 위치를 이동한 후, 그 데이터 항목을 리턴한다.      
+    이미 현재 위치가 목록의 맨 끝이라서, 다음 데이터 항목이 없다면 예외(NoSuchElementException)가 발생한다.     
+
+* `int nextIndex()`     
+    다음 데이터 항목으로 현재 위치를 이동한 후, 그 데이터 항목의 **인덱스**를 리턴한다.         
+    이미 현재 위치가 목록의 끝이라서, 다음 데이터 항목이 없다면 예외(NoSuchElementException)가 발생한다.     
+
+* `E previous()`
+    이전 데이터 항목으로 현재 위치를 이동한 후, 그 데이터 항목을 리턴한다.         
+    이미 현재 위치가 목록의 끝이라서, 다음 데이터 항목이 없다면 예외(NoSuchElementException)가 발생한다.        
+
+* `int previousIndex()`
+    이전 데이터 항목으로 현재 위치를 이동한 후, 그 데이터 항목의 **인덱스**를 리턴한다.         
+    이미 현재 위치가 목록의 끝이라서, 다음 데이터 항목이 없다면 예외(NoSuchElementException)가 발생한다.        
+
+* `void remove()`   
+    컬렉션에서 현재 위치의 데이터를 제거한다.       
+    직전의 next() 메소드 호출이나 previous() 메소드 호출에서 리턴된 데이터가 제거된다.      
+
+* `void set(E e)`   
+    현재 위치에 데이터 e를 **덮어쓴다.**    
+    직전의 next() 메소드 호출이나 previous() 메소드 호출에서 리턴된 데이터가 덮어 써진다.   
+    
+
+2) List Iterator 객체 생성
