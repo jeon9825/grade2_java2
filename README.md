@@ -1667,4 +1667,40 @@ while(iterator.hasNext()){
     직전의 next() 메소드 호출이나 previous() 메소드 호출에서 리턴된 데이터가 덮어 써진다.   
     
 
-2) List Iterator 객체 생성
+2) List Iterator 객체 생성      
+List 인터페이스의 listIterator() 메소드를 호출하면,     
+현재 컬렉션 객체를 탐색하기 위한 이터레이터 객체가 생성되어 리턴된다.       
+
+**List 인터페이스의 메소드**
+* `ListIterator listIterator()`     
+    현재 리스트 객체를 탐색하기 위한 리스트 이터레이터 객체가 생성되어 리턴한다. 리턴된 리스트 이터레이터 객체의 현재 위치는, *아직 아무것도 가르키고 있지 않다.*       
+    리스트 이터레이터 객체를 생성한 후, next() 메소드를 호출하면 목록에서 첫 데이터 항목을 가리킨다.        
+* `ListIterator listIterator(int index)`    
+    현재 리스트 객체를 탐색하기 위한 리스트 이터레이터 객체가 생성되어 리턴된다.    
+    리턴된 리스트이터레이터 객체의 현재 위치는, index 위치의 데이터 항목을 가르킨다.        
+
+**역방향 탐색**     
+```java
+ListIterator<Integer> iterator = list.listIterator(list.size());
+while(iterator.hasPrevious()){
+    Integer i = iterator.previous();
+    System.out.print(i + " ");
+}
+```
+
+**탐색 중 삽입**        
+```java
+List<Integer> iterator = list.listIterator();
+while(iterator.hasNext()){
+    int i = iterator.next();
+    if(i % 2 == 1)
+        iterator.add(i+1);
+}
+//또는
+List<Integer> iterator = list.listIterator(list.size());
+while(iterator.hasPrevious()){
+    int i = iterator.previous();
+    if(i % 2 == 1)
+        iterator.add(i-1);
+}
+```
