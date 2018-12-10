@@ -8,6 +8,9 @@ public class Example5 {
 		s=s.trim();
 		String[] arr = s.split(" "); 
 		return arr;
+//		method chaining
+//		return s.replaceAll("[^a-zA-Z]+", " ").trim().split(" ");
+		
 	}
 
 	public static void main(String[] args) {

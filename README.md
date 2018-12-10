@@ -852,9 +852,11 @@ Java 표준 라이브러리에 포함된 컬랙션 클래스들의 수가 많고
 
 **Set interface**   
 수학에서 집합(set)은 값이 같은 항목을 여러개 포함할 수 없다.    
+>> HashSet, TreeSet     
 
 **List interface**      
-List interface를 구현한 대표적인 클래스가 ArrayList이다. 배열과 비슷한 방법으로 사용할 수 있는 컬렉션 클래스들을 대표하는 것이 List interface이다.      
+List interface를 구현한 대표적인 클래스가 ArrayList이다. 배열과 비슷한 방법으로 사용할 수 있는 컬렉션 클래스들을 대표하는 것이 List interface이다.     
+>> ArrayList, LinkedList        
 
 **Queue interface**     
 Queue에 데이터를 넣고 꺼내는 방식은 FIFO(first in first out)이다.   
@@ -864,6 +866,7 @@ Queue에 데이터를 넣고 꺼내는 방식은 FIFO(first in first out)이다.
 
 **Map interface**   
 키(key)로 값(value)을 등록하거나 꺼내는 방식으로 사용하는 컬렉션 클래스들을 대표하는 인터페이스이다.    
+>> HashMap, TreeMap     
 
 **SortedSet interface, SortedMap interface**   
 SortedSet, SortedMap은 각각 Set, Map의 자식 인터페이스이다. 그래서 각각 Set, Map에 정의된 메소드들을 상속받는다. SortedSet, SortedMap은 데이터를 정렬된 순서로 보관한다.    
