@@ -1,6 +1,7 @@
 package e2018.exam2;
 
 public class Exam10 {
+
 	static int sum(int[][] a) {
 		int sum = 0;
 		for (int r = 0; r < a.length; r++) {
